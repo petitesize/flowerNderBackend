@@ -1,0 +1,5 @@
+# env파일
+.env
+
+# node모듈
+node_modules
