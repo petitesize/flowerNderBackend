@@ -26,10 +26,20 @@ if (process.env.MONGODB_URI === undefined) {
   );
 }
 
+// jwt 관련 에러 제어
+if (process.env.JWT_SECRET === undefined) {
+  throw new AppError(
+    commongErrors.configError,
+    "어플리케이션을 시작하려면 JWT_SECRET 환경변수가 필요합니다."
+  )
+}
+
 module.exports = {
   applicationName: process.env.APPLICATION_NAME ?? "app", // 어플리케이션 이름
 
   port: parseInt(process.env.PORT ?? "3000", 10), // 어플리케이션이 바인딩되는 포트
 
   mongoDBUri: process.env.MONGODB_URI, // mongoDB 연결 주소
+
+  jwtSecret: process.env.JWT_SECRET, //회원가입 jwt토큰 발급위해
 };
