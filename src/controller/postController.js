@@ -1,4 +1,4 @@
-const { postService } = require("../service/postService");
+const { postService } = require("../service");
 const utils = require("../misc/utils");
 
 /**
