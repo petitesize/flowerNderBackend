@@ -8,6 +8,6 @@ const authRouter = express.Router();
 authRouter.post("/signup", authController.postSignUp);
 
 // 로그인 : POST /api/v1/login
-postRouter.post("/login", authController.postSignIn);
+authRouter.post("/login", authController.postSignIn);
 
 module.exports = authRouter;

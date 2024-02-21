@@ -49,4 +49,4 @@ class UserDAO {
 
 }
 
-module.exports = new userDAO();
+module.exports = new UserDAO();
