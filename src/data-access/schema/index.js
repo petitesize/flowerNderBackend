@@ -1,9 +1,9 @@
 const commentSchema = require("./comment");
 const postSchema = require("./post");
-const userSchema = require("./uesr")
+const userSchema = require("./user")
 
 module.exports = {
   commentSchema,
   postSchema,
-  userSchema
+  userSchema,
 };
