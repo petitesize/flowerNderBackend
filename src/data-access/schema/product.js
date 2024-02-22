@@ -20,11 +20,6 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    soldout: {
-      type: Boolean,
-      required: true,
-      default: false,
-    },
     description: {
         type: String,
         required: true,
