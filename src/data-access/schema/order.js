@@ -4,9 +4,10 @@ const imageSchema = require('./image.js');
 // 주문 아이템 스키마
 const orderItemSchema = new mongoose.Schema(
   {
+    //주문한 상품에 맞는 main_image와 title 불러와야함
     product_id: {
-        type: Number,
-        required: true,
+      type: mongoose.Types.ObjectId,
+      required: true,
     },
     main_image: imageSchema,
     title: {
@@ -36,6 +37,11 @@ const orderSchema = new mongoose.Schema(
       required: true,
     },
     order_date: {
+      type: String,
+      required: true,
+    },
+    //일단 무통장입금으로 통일이지만 Order document에는 정보 저장 필요해보여서 추가
+    pay_method: {
       type: String,
       required: true,
     },
