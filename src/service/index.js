@@ -1,5 +1,5 @@
 const postService = require("./postService");
-const authService = require("./authService")
+const authService = require("./authService");
 
 module.exports = {
   postService,
