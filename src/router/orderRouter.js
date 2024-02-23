@@ -11,14 +11,14 @@ orderRouter.post("/", orderController.postOrder);
 // req.params 객체를 통해 참조한 db document의 id는 동적 경로 매개변수
 orderRouter.get(
    "/:id", 
-   productMiddleware.checkOrderIdFrom("query"), 
+   orderMiddleware.checkOrderIdFrom("query"), 
    orderController.getOrder
 );
 
 // 배송지 수정 PATCH /api/v1/login
 orderRouter.patch(
    "/:id", 
-   productMiddleware.checkOrderIdFrom("query"), 
+   orderMiddleware.checkOrderIdFrom("query"), 
    orderController.patchOrder
 );
 
