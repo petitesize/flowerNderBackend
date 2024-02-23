@@ -19,7 +19,7 @@ const orderController = {
 
    async getOrder(req, res, next) {
       try {
-         const {_id, customer_info} = req.body;
+         const {_id, customer_info} = req.query;
          const foundOrder = await orderService.getOrder(
             _id, 
             customer_info.name, 
@@ -34,7 +34,7 @@ const orderController = {
    
    async patchOrder(req, res, next) {
       try {
-         const { _id, shipping_info } = req.body;
+         const { _id, shipping_info } = req.query;
          const updatedOrder = await orderService.updateOrder( _id, shipping_info);
 
          res.status(200).json(utils.buildResponse(updatedOrder));
