@@ -1,7 +1,7 @@
 const AppError = require("../misc/AppError");
 const commonErrors = require("../misc/commonErrors");
 
-// api주소 쿼리 파람(id) 검사
+// api주소 path? query? 파람(id) 검사
 const checkOrderIdFrom = (from) => (req, res, next) => {
   const { id } = req[from];
   // id 필수
