@@ -7,10 +7,10 @@ const productRouter = express.Router();
 // GET /api/v1/products
 productRouter.get("/", productController.getProducts);
 
-// GET /api/v1/products/:product_id
+// GET /api/v1/products/:productId
 productRouter.get(
-  "/:product_id",
-  productMiddleware.checkProductIdFrom("query"), 
+  "/:productId",
+  // productMiddleware.checkProductIdFrom("path"), 
   productController.getProduct 
 );
 

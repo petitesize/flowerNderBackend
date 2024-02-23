@@ -3,10 +3,10 @@ const { User } = require("./model");
 const utils = require("../misc/utils");
 
 class UserDAO {
-  async create({ email, password, isAdmin }) {
+  async create({ email, password, user_name, phone_number, address, address_detail, isAdmin }) {
     
     // const user = new User({ email, password, isAdmin });
-    const user = await User.create({ email, password, isAdmin })
+    const user = await User.create({ email, password, user_name, phone_number, address, address_detail, isAdmin })
     await user.save();
 
     return user.toObject();
@@ -25,13 +25,11 @@ class UserDAO {
     return users[0];
   }
 
-  async updateById (id, { email, password, isAdmin }) {
+  async updateById (id, { email, password, user_name, phone_number, address, address_detail, isAdmin }) {
     const updatedUser = await User.findByIdAndUpdate(
         id, 
         {
-            email,
-            password,
-            isAdmin,
+          email, password, user_name, phone_number, address, address_detail, isAdmin
         }, 
         {
             runValidators: true,
