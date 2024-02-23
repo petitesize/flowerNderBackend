@@ -1,6 +1,23 @@
 const AppError = require("../misc/AppError");
 const commonErrors = require("../misc/commonErrors");
 
+// api주소 쿼리 파람(id) 검사
+const checkOrderIdFrom = (from) => (req, res, next) => {
+  const { id } = req[from];
+  // id 필수
+  if (id === undefined) {
+    next(
+      new AppError(
+        commonErrors.requestValidationError,
+        `${from}: 주문 id를 다시 확인하고 입력하세요.`,
+        400
+      )
+    );
+    return;
+  }
+  next();
+};
+
 const checkCompleteOrderForm = (from) => (req, res, next) => {
   const { order_amount, customer_info, shipping_info } = req[from];
 
@@ -30,4 +47,7 @@ const checkCompleteOrderForm = (from) => (req, res, next) => {
   next();
 };
 
-module.exports = { checkCompleteOrderForm };
+module.exports = {
+  checkCompleteOrderForm,
+  checkOrderIdFrom
+};
