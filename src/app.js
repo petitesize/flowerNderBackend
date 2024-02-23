@@ -29,7 +29,8 @@ async function create() {
   });
 
   // version 1의 api router를 등록
-  expressApp.use("/api/v1", apiRouter.v1);
+  // /api/v1 인써도 되나?
+  expressApp.use("/v1", apiRouter.v1);
 
   const file = fs.readFileSync(path.resolve(__dirname, "swagger.yaml"), "utf8");
   const swaggerDocument = YAML.parse(file);
