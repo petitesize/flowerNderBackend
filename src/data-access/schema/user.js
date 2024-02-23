@@ -6,8 +6,24 @@ const userSChema = new Schema(
         email: {
             type: String,
             required: true,
-        },
+        },        
         password: {
+            type: String,
+            required: true,
+        },
+        user_name: {
+            type: String,
+            required: true,
+        },
+        phone_number: {
+            type: String,
+            required: true,
+        },
+        address: {
+            type: String,
+            required: true,
+        },
+        address_detail: {
             type: String,
             required: true,
         },
