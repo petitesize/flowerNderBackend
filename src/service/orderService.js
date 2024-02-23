@@ -4,8 +4,9 @@ const commonErrors = require("../misc/commonErrors");
 
 class orderService {
    // 주문 서비스
-   async placeOrder({ orderItems, customerInfo, shippingInfo, deliveryFee = 0 }) {
+   async placeOrder({ orderItems, customerInfo, shippingInfo}) {
       // 일단 모든 주문 착불(배송비 0)이지만 추후 배송비 입력 원할경우를 위해 변수 만들어 놓음
+      const deliveryFee = 0;
       // 배열로 받은 orderItems의 각 가격*수량+배송비 계산해서 더하기
       const orderAmount = orderItems.reduce((sum, item) => sum += item.quantity*item.total_amount, deliveryFee)
       
