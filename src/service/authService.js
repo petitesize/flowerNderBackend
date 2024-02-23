@@ -75,7 +75,6 @@ class authService {
     return encodedToken;
   }
 
-
 }
 
 module.exports = new authService();
