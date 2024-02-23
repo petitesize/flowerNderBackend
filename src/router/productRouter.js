@@ -4,17 +4,20 @@ const { productMiddleware } = require("../middleware");
 
 const productRouter = express.Router();
 
+// GET /api/v1/products
+productRouter.get("/", productController.getProducts);
+
 // GET /api/v1/products/:product_id
 productRouter.get(
   "/:product_id",
-  productMiddleware.checkProductIdFrom("params"), 
+  productMiddleware.checkProductIdFrom("query"), 
   productController.getProduct 
 );
 
-// GET /api/v1/products/:category
+// GET /api/v1/products?category={category}
 productRouter.get(
-  "/:category", 
-  productMiddleware.checkProductCategoryFrom("params"), 
+  "/", 
+  productMiddleware.checkProductCategoryFrom("query"), 
   productController.getProducts
 ); 
 

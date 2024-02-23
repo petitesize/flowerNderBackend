@@ -2,13 +2,13 @@ const AppError = require("../misc/AppError");
 const commonErrors = require("../misc/commonErrors");
 
 const checkProductIdFrom = (from) => (req, res, next) => {
-  const { id } = req[from] || req;
+  const { id } = req[from];
   // id 필수
   if (id === undefined) {
     next(
       new AppError(
         commonErrors.requestValidationError,
-        `${req[from]}: id는 필수값입니다.`,
+        `${from}: id는 필수값입니다.`,
         400
       )
     );
@@ -18,7 +18,7 @@ const checkProductIdFrom = (from) => (req, res, next) => {
 };
 
 const checkProductCategoryFrom = (from) => (req, res, next) => {
-   const { category } = req[from]
+   const { category } = req[from];
    // category 필수
    if (category === undefined) {
      next(
