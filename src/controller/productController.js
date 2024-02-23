@@ -6,7 +6,7 @@ const productController = {
    // 상품 하나
    async getProduct(req, res, next) {
       try {
-         const { productId } = req.params;
+         const { productId } = req.query;
          const product = await productService.getProduct(productId);
          res.json(utils.buildResponse(product));
       } catch (error) {
@@ -18,7 +18,7 @@ const productController = {
    // 상품 카테고리별
    async getProducts(req, res, next) {
       try {
-         const { category } = req.params;
+         const { category } = req.query;
          const products = await productService.getProducts({ category });
          res.json(utils.buildResponse(products));
       } catch (error) {
