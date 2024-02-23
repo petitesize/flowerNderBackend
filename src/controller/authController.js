@@ -25,7 +25,7 @@ const authController = {
             email,
             plainPassword: password,
          });
-         res.status(201).json(utils,utils.buildResponse(token));
+         res.status(201).json(utils.buildResponse(token));
       } catch (e) {
          next(e);
       }
