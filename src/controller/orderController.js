@@ -19,11 +19,14 @@ const orderController = {
 
    async getOrder(req, res, next) {
       try {
-         const {_id, customer_info} = req.query;
+        // api 경로 매개변수에서 ID 추출
+        const { id } = req.params;
+        // 입력받은 쿼리 매개변수에서 정보 추출
+        const { name, email } = req.query;
          const foundOrder = await orderService.getOrder(
-            _id, 
-            customer_info.name, 
-            customer_info.email
+            id, 
+            name, 
+            email
          );
 
          res.json(utils.buildResponse(foundOrder));
@@ -34,8 +37,9 @@ const orderController = {
    
    async patchOrder(req, res, next) {
       try {
-         const { _id, shipping_info } = req.query;
-         const updatedOrder = await orderService.updateOrder( _id, shipping_info);
+        const { id } = req.params;
+        const { shipping_info } = req.query;
+         const updatedOrder = await orderService.updateOrder( id, shipping_info);
 
          res.status(200).json(utils.buildResponse(updatedOrder));
       } catch (e) {

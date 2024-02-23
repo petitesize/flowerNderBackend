@@ -10,6 +10,7 @@ const config = require("./config");
 const AppError = require("./misc/AppError");
 const commonErrors = require("./misc/commonErrors");
 const apiRouter = require("./router");
+const cors = require("cors")
 
 // express application을 "생성"해주는 함수
 async function create() {
@@ -27,6 +28,9 @@ async function create() {
       status: "OK",
     });
   });
+
+  // 모든 출처에서의 요청을 허용(CORS(Cross-Origin Resource Sharing) 정책)
+  expressApp.use(cors()); 
 
   // version 1의 api router를 등록
   // /api/v1 인써도 되나?
