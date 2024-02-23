@@ -29,7 +29,11 @@ class orderService {
    
    // 주문 조회 서비스
    async getOrder(id, name, email) {
-      const order = await orderDAO.findOrder(id, name, email);
+      const order = await orderDAO.findOrder(
+         id, 
+         name,
+         email
+      );
       if(!order) {
          throw new AppError(
            commonErrors.inputError,
