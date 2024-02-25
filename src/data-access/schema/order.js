@@ -28,6 +28,7 @@ const orderItemSchema = new mongoose.Schema(
 // 주문 정보 스키마
 const orderSchema = new mongoose.Schema(
   {
+    // C: 각 상품마다 total_amount가 있는데 별도로 order_amount가 있는 이유가 있나요?
     order_amount: {
       type: Number,
       required: true,
@@ -36,6 +37,7 @@ const orderSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    // C: Date 타입 말고 String을 사용하시는 이유가 있으실까요?
     order_date: {
       type: String,
       required: true,

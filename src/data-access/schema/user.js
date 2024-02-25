@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
+// C: 오타입니다: userSchema
 const userSChema = new Schema(
     {
         email: {

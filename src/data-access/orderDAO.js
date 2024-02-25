@@ -31,6 +31,7 @@ class OrderDAO {
   }
 
   async updateShippingInfo(id, shippingInfo) {
+     // C: find*로 시작되는 메서드들은 toObject가 아닌 lean으로 POJO로 바꿔줘야 합니다.
    const orderUpdated = await Order.findByIdAndUpdate(id, {
       'shipping_info.recipient': shippingInfo.recipient,
       'customer_info.phone_number': shippingInfo.phone_number,
@@ -40,6 +41,7 @@ class OrderDAO {
       new: true
    });
 
+   // C: 위의 코드를 .lean()으로 가져오게 되면 .toObject()는 필요없습니다. 사실 아래 코드는 .toObject 함수가 없다는 에러가 날거에요...
    return orderUpdated.toObject();
   }
 }

@@ -19,7 +19,9 @@ class orderService {
          })
          return order;
       } catch (e) {
+         // C: 여기서 e에 대한 로그 한 번 찍어줍시다. 던져진 에러에 대해서 로그를 남기지 않아서 디버깅 시 에러의 원인을 찾기 어려워집니다.
          throw new AppError(
+            // C: databaseError가 더 맞을 것 같습니다.
             commonErrors.inputError,
             "주문 생성 중 에러",
             400
@@ -36,6 +38,7 @@ class orderService {
       );
       if(!order) {
          throw new AppError(
+            // C: resourceNotFoundError가 더 맞을 것 같습니다.
            commonErrors.inputError,
            "주문 내역 조회 중 에러",
            400
@@ -50,7 +53,9 @@ class orderService {
          const orderUpdated = await orderDAO.updateShippingInfo(id, shippingInfo);
          return orderUpdated;
       } catch(e) {
+         // C: 여기서 e에 대한 로그 한 번 찍어줍시다. 던져진 에러에 대해서 로그를 남기지 않아서 디버깅 시 에러의 원인을 찾기 어려워집니다.
          throw new AppError(
+            // C: databaseError가 더 맞을 것 같습니다.
             commonErrors.inputError,
             "주문 배송정보 업데이트 중 에러",
             400

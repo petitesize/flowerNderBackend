@@ -12,6 +12,7 @@ class authService {
     const existingUser = await userDAO.findByEmail(email);
     if(existingUser !== null) {
       throw new AppError(
+        // C: resourceDuplicationError가 나을 것 같긴 합니다.
         commonErrors.inputError,
         "Already being used email",
         400

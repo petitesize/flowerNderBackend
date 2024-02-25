@@ -15,6 +15,7 @@ productRouter.get(
 );
 
 // GET /api/v1/products?category={category}
+// C: 아래 get 라우트는 가장 위에 있는 라우트랑 중복이기 때문에 실행이 되지 않습니다. 위에 것을 사용해주세요.
 productRouter.get(
   "/", 
   productMiddleware.checkProductCategoryFrom("query"), 
