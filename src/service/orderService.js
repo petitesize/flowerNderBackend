@@ -1,5 +1,6 @@
 const { orderDAO } = require("../data-access");
 const AppError = require("../misc/AppError");
+const { resourceNotFoundError, databaseError } = require('../misc/commonErrors');
 const commonErrors = require("../misc/commonErrors");
 
 class orderService {
@@ -19,8 +20,9 @@ class orderService {
          })
          return order;
       } catch (e) {
+         console.log(e);
          throw new AppError(
-            commonErrors.inputError,
+            databaseError.inputError,
             "주문 생성 중 에러",
             400
          )
@@ -36,7 +38,7 @@ class orderService {
       );
       if(!order) {
          throw new AppError(
-           commonErrors.inputError,
+           resourceNotFoundError.inputError,
            "주문 내역 조회 중 에러",
            400
          )
@@ -50,8 +52,9 @@ class orderService {
          const orderUpdated = await orderDAO.updateShippingInfo(id, shippingInfo);
          return orderUpdated;
       } catch(e) {
+         console.log(e);
          throw new AppError(
-            commonErrors.inputError,
+            databaseError.inputError,
             "주문 배송정보 업데이트 중 에러",
             400
          )
