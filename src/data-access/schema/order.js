@@ -37,8 +37,8 @@ const orderSchema = new mongoose.Schema(
       required: true,
     },
     order_date: {
-      type: String,
-      required: true,
+      type: Date,
+      default: new Date(),
     },
     //일단 무통장입금으로 통일이지만 Order document에는 정보 저장 필요해보여서 추가
     pay_method: {

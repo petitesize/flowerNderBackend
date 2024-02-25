@@ -1,2 +1,31 @@
-// order 관련 -> 찬주
-// product 관련 -> 지원
+const { adminService } = require("../service");
+const utils = require("../misc/utils");
+
+const adminController = {
+   async getOrders(req, res, next) {
+      try {
+
+      } catch(e) {
+         next(e);
+      }
+   },
+   
+   async patchOrder(req, res, next) {
+      try {
+
+      } catch(e) {
+         next(e);
+      }
+   },
+   
+   async deleteOrder(req, res, next) {
+      try {
+
+      } catch(e) {
+         next(e);
+      }
+   },
+   
+}
+
+module.exports = adminController;

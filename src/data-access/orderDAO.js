@@ -38,9 +38,9 @@ class OrderDAO {
       'shipping_info.address_detail': shippingInfo.address_detail,
    }, {
       new: true
-   });
+   }).lean();
 
-   return orderUpdated.toObject();
+   return orderUpdated;
   }
 }
 

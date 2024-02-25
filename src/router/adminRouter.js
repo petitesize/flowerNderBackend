@@ -10,7 +10,6 @@ const adminRouter = express.Router();
 // 관리자 회원조회 : GET /api/v1/admin/users
 adminRouter.get("/", adminController.getUsers);
 
-
 // 관리자 주문조회 : GET /api/v1/admin/orders
 adminRouter.get("/", adminController.getOrders);
 
@@ -19,7 +18,6 @@ adminRouter.patch("/:order_id", adminController.patchOrder);
 
 // 관리자 주문삭제 : DELETE /api/v1/admin/orders/:order_id
 adminRouter.delete("/:order_id", adminController.deleteOrder);
-
 
 // 관리자 상품조회 : GET /api/v1/admin/products
 adminRouter.get("/", adminController.getProducts );
