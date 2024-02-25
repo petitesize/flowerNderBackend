@@ -6,6 +6,7 @@ const userSChema = new Schema(
         email: {
             type: String,
             required: true,
+            unique: true, //mongoDB가 제공하는 중복 회피 체크 기능
         },        
         password: {
             type: String,
@@ -40,4 +41,4 @@ const userSChema = new Schema(
     }
 )
 
-module.exports = userSChema;
+module.exports = userSchema;
