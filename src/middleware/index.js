@@ -9,5 +9,5 @@ module.exports = {
   postMiddleware,
   productMiddleware,
   orderMiddleware,
-  adminMiddleware
+  adminMiddleware,
 };

@@ -9,5 +9,5 @@ module.exports = {
   authService,
   productService,
   orderService,
-  adminService
+  adminService,
 };

@@ -43,7 +43,7 @@ class PostService {
       throw new AppError(
         commonErrors.resourceNotFoundError,
         "해당 게시글이 존재하지 않습니다",
-        404
+        404,
       );
     }
     return updatedPost;
@@ -56,7 +56,7 @@ class PostService {
       throw new AppError(
         commonErrors.resourceNotFoundError,
         "해당 게시글이 존재하지 않습니다",
-        404
+        404,
       );
     }
     return deletedPost;
@@ -84,7 +84,7 @@ class PostService {
       throw new AppError(
         commonErrors.resourceNotFoundError,
         "해당 게시물 또는 댓글이 존재하지 않습니다.",
-        404
+        404,
       );
     }
 
@@ -104,7 +104,7 @@ class PostService {
       throw new AppError(
         commonErrors.resourceNotFoundError,
         "해당 게시물 또는 댓글이 존재하지 않습니다.",
-        404
+        404,
       );
     }
 

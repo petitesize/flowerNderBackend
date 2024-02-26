@@ -1,6 +1,5 @@
 const express = require("express");
 const { productController } = require("../controller");
-const { productMiddleware } = require("../middleware");
 
 const productRouter = express.Router();
 
@@ -9,9 +8,6 @@ const productRouter = express.Router();
 productRouter.get("/", productController.getProducts);
 
 // GET /api/v1/products/:productId
-productRouter.get(
-  "/:productId",
-  productController.getProduct 
-);
+productRouter.get("/:productId", productController.getProduct);
 
 module.exports = productRouter;

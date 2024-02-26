@@ -10,7 +10,7 @@ const config = require("./config");
 const AppError = require("./misc/AppError");
 const commonErrors = require("./misc/commonErrors");
 const apiRouter = require("./router");
-const cors = require("cors")
+const cors = require("cors");
 
 // express application을 "생성"해주는 함수
 async function create() {
@@ -23,14 +23,14 @@ async function create() {
   expressApp.use(express.json());
 
   // Health check API
-  expressApp.get("/health", (req, res, next) => {
+  expressApp.get("/health", (req, res) => {
     res.json({
       status: "OK",
     });
   });
 
   // 모든 출처에서의 요청을 허용(CORS(Cross-Origin Resource Sharing) 정책)
-  expressApp.use(cors()); 
+  expressApp.use(cors());
 
   // version 1의 api router를 등록
   // /api/v1 인써도 되나?
@@ -42,7 +42,7 @@ async function create() {
   expressApp.use(
     "/api-docs",
     swaggerUi.serve,
-    swaggerUi.setup(swaggerDocument)
+    swaggerUi.setup(swaggerDocument),
   );
 
   // 해당되는 URL이 없을 때를 대비한 미들웨어
@@ -51,12 +51,13 @@ async function create() {
       new AppError(
         commonErrors.resourceNotFoundError,
         "Resource not found",
-        404
-      )
+        404,
+      ),
     );
   });
 
   // 에러 핸들러 등록
+  // eslint-disable-next-line no-unused-vars
   expressApp.use((error, req, res, next) => {
     console.log(error);
     res.statusCode = error.httpCode ?? 500;
@@ -76,10 +77,10 @@ async function create() {
       server.listen(config.port);
       server.on("listening", () => {
         console.log(
-          `🚀${config.applicationName}가 포트 ${config.port}에서 운영중입니다.`
+          `🚀${config.applicationName}가 포트 ${config.port}에서 운영중입니다.`,
         );
         console.log(
-          `📜${config.applicationName}의 REST API 문서는 /api-docs에서 확인 가능합니다.`
+          `📜${config.applicationName}의 REST API 문서는 /api-docs에서 확인 가능합니다.`,
         );
       });
     },

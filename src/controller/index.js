@@ -9,5 +9,5 @@ module.exports = {
   authController,
   productController,
   orderController,
-  adminController
+  adminController,
 };
