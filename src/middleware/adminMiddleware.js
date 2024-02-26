@@ -17,6 +17,19 @@ const checkAuthorization = (req, res, next) => {
    }
 };
 
+// 접근 권한 체크
+const checkAdminPermission = (req, res, next) => {
+   if (res.locals.user.isAdmin) {
+     next();
+     return;
+   } else {
+      const error = new Error("접근 권한이 없습니다.");
+      error.statusCode = 403;
+      next(error);
+   }
+}; 
+
 module.exports = {
    checkAuthorization,
+   checkAdminPermission,
 };

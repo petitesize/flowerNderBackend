@@ -19,6 +19,7 @@
     "mongodb": "^6.3.0",
     "mongoose": "^8.1.2",
     "swagger-ui-express": "^5.0.0",
+    "validator": "^13.11.0",
     "yaml": "^2.3.2"
   },
   "devDependencies": {
