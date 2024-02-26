@@ -46,7 +46,7 @@ class ProductService {
          404
          );
       }
-      return deleteProduct;
+      return deletedProduct;
    }
 }
 

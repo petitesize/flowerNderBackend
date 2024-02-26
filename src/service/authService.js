@@ -13,7 +13,7 @@ class authService {
     if(existingUser !== null) {
       throw new AppError(
         commonErrors.inputError,
-        "Already being used email",
+        "리소스 중복 에러",
         400
       )
     }
@@ -44,7 +44,7 @@ class authService {
     if(user === null) {
       throw new AppError(
         commonErrors.resourceNotFoundError,
-        "Please doublecheck your email or password", //유저가 없는 경우더라도 보안을 위해 이메일과 비밀번호 체크해달라는 에러 던지기
+        "이메일 또는 비밀번호를 다시 확인해주세요", //유저가 없는 경우더라도 보안을 위해 이메일과 비밀번호 체크해달라는 에러 던지기
         400
       )
     }
@@ -53,7 +53,7 @@ class authService {
     if(!isPasswordValid) {
       throw new AppError(
         commonErrors.inputError,
-        "Please doublecheck your email or password",
+        "이메일 또는 비밀번호를 다시 확인해주세요",
         400
       )
     }

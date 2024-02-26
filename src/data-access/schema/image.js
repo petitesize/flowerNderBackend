@@ -7,6 +7,7 @@ const imageSchema = new mongoose.Schema(
         type: String,
         required: true,
         default: null,
+        match: [/^https?:\/\/\S+$/, "올바른 URL 형식이어야 합니다."]
     },
     alt: {
         type: String,
