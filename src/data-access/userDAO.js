@@ -45,6 +45,12 @@ class UserDAO {
     return deletedUser;
   }
 
+  //admin용 전체 회원내역 get
+  async allUsers() {
+    const users = await User.find({}).lean();
+    return users
+  }
+
 }
 
 module.exports = new UserDAO();

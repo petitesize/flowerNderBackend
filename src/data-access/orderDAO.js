@@ -42,6 +42,29 @@ class OrderDAO {
 
    return orderUpdated;
   }
+  
+   //admin용 전체 주문내역 get
+   async allOrders() {
+      const orders = await Order.find({}).lean();
+      return orders;
+   }
+
+   //admin용 주문 수정
+   async updateOrderStatus(id, order_status) {
+      const update_order = await Order.findByIdAndUpdate(
+         id, 
+         {order_status}, 
+         {new: true}
+      ).lean();
+
+      return update_order;
+   }
+
+   //admin용 주문 삭제
+   async deleteOrder(id) {
+      const delete_order = await Order.findByIdAndDelete(id); //mongoose에는 deleteById 매서드는 없었다고 한다...
+      return delete_order;
+   }
 }
 
 module.exports = new OrderDAO();
