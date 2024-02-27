@@ -13,7 +13,7 @@ const userController = {
       }
    },
 
-   // 회원정보조회(password 없음)
+   // 회원정보조회(password, isAdmin 없음)
    async getUserInfo(req, res, next) {
       try {
          const userEmail = res.locals.user.email;

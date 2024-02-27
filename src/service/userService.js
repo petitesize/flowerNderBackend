@@ -3,11 +3,11 @@ const AppError = require("../misc/AppError");
 const commonErrors = require("../misc/commonErrors");
 
 class UserService {
-   // 회원정보조회(password 제외)
+   // 회원정보조회(password, isAdmin 없음)
    async getUserInfo(userEmail) { 
       const userInfo = await userDAO.findByEmail(userEmail);
-      const { password, ...userInfoWithoutPassword } = userInfo;
-      return userInfoWithoutPassword;
+      const { password, isAdmin, ...userInfoWithoutSensitive } = userInfo;
+      return userInfoWithoutSensitive;
    }
 
    // 회원정보수정
