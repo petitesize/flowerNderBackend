@@ -35,11 +35,22 @@ const orderController = {
       }
    },
    
-   async patchOrder(req, res, next) {
+   async patchShippingInfo(req, res, next) {
       try {
          const { id } = req.params;
          const { shipping_info } = req.body;
-         const updatedOrder = await orderService.updateOrder( id, shipping_info);
+         const updatedOrder = await orderService.updateShippingInfo(id, shipping_info);
+
+         res.status(200).json(utils.buildResponse(updatedOrder));
+      } catch (e) {
+         next(e);
+      }
+   },
+   async patchCancelReq(req, res, next) {
+      try {
+         const { id } = req.params;
+         const { cancel_req } = req.body;
+         const updatedOrder = await orderService.updateCancelReq(id, cancel_req);
 
          res.status(200).json(utils.buildResponse(updatedOrder));
       } catch (e) {
