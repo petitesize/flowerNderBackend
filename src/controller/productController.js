@@ -40,9 +40,9 @@ const productController = {
    // HTTP PUT를 위한 controller(request handler)
    async putProduct(req, res, next) {
       try {
-         const { productId } = req.params;
+         const { id } = req.params;
          const { category, title, price, stock, description, size, origin, attribute, main_image, sub_image } = req.body;
-         const product = await productService.updateProduct(productId, {
+         const product = await productService.updateProduct(id, {
             category, title, price, stock, description, size, origin, attribute, main_image, sub_image,
          });
          res.json(utils.buildResponse(product));
@@ -54,8 +54,8 @@ const productController = {
    // HTTP DELETE를 위한 controller(request handler)
    async deleteProduct(req, res, next) {
       try {
-         const { productId } = req.params;
-         const product = await productService.deleteProduct(productId);
+         const { id } = req.params;
+         const product = await productService.deleteProduct(id);
          res.json(utils.buildResponse(product));
       } catch (error) {
          next(error);
