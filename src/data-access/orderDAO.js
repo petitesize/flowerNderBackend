@@ -1,6 +1,4 @@
-const mongoose = require("mongoose");
 const { Order } = require("./model");
-const utils = require("../misc/utils");
 
 class OrderDAO {
    async create({ orderAmount, orderItems, customerInfo, shippingInfo }) {
@@ -33,7 +31,8 @@ class OrderDAO {
   async updateShippingInfo(id, shippingInfo) {
    const orderUpdated = await Order.findByIdAndUpdate(id, {
       'shipping_info.recipient': shippingInfo.recipient,
-      'customer_info.phone_number': shippingInfo.phone_number,
+      'shipping_info.phone_number': shippingInfo.phone_number,
+      'shipping_info.postal_code' : shippingInfo.postal_code,
       'shipping_info.address': shippingInfo.address,
       'shipping_info.address_detail': shippingInfo.address_detail,
    }, {

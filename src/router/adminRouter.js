@@ -50,14 +50,14 @@ adminRouter.post(
 
 // 관리자 상품수정 : PUT /api/v1/admin/products/product_id
 adminRouter.put(
-   "/products/:productId", 
+   "/products/:id", 
    productMiddleware.checkCompleteProductFrom("body"),
    productController.putProduct
 );
 
 // 관리자 상품삭제 : DELETE /api/v1/admin/products/product_id
 adminRouter.delete(
-   "/products/:productId", 
+   "/products/:id", 
    productMiddleware.checkProductIdFrom("params"),
    productController.deleteProduct
 );

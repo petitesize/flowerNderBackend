@@ -1,4 +1,3 @@
-const mongoose = require("mongoose");
 const { Product } = require("./model");
 const utils = require("../misc/utils");
 

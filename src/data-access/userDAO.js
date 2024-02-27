@@ -1,6 +1,4 @@
-const mongoose = require("mongoose");
 const { User } = require("./model");
-const utils = require("../misc/utils");
 
 class UserDAO {
   async create({ email, password, user_name, phone_number, address, address_detail, isAdmin }) {
