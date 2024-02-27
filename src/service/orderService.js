@@ -46,15 +46,30 @@ class orderService {
    }
 
    // 주문 (배송 관련 정보) 변경 서비스
-   async updateOrder(id, shippingInfo) {
+   async updateShippingInfo(id, shipping_info) {
       try {
-         const orderUpdated = await orderDAO.updateShippingInfo(id, shippingInfo);
+         const orderUpdated = await orderDAO.updateShippingInfo(id, shipping_info);
          return orderUpdated;
       } catch(e) {
          console.log(e);
          throw new AppError(
             databaseError.inputError,
-            "주문 배송정보 업데이트 중 에러",
+            "주문 배송지 업데이트 중 에러",
+            400
+         )
+      }
+   }
+
+   // 유저 주문취소 요청
+   async updateCancelReq(id, cancel_req) {
+      try {
+         const orderUpdated = await orderDAO.updateCancelReq(id, cancel_req);
+         return orderUpdated;
+      } catch(e) {
+         console.log(e);
+         throw new AppError(
+            databaseError.inputError,
+            "주문 취소 수정 중 에러",
             400
          )
       }
