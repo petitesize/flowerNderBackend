@@ -29,7 +29,7 @@ if (process.env.MONGODB_URI === undefined) {
 // jwt 관련 에러 제어
 if (process.env.JWT_SECRET === undefined) {
   throw new AppError(
-    commongErrors.configError,
+    commonErrors.configError,
     "어플리케이션을 시작하려면 JWT_SECRET 환경변수가 필요합니다."
   )
 }

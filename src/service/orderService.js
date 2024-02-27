@@ -1,7 +1,6 @@
 const { orderDAO } = require("../data-access");
 const AppError = require("../misc/AppError");
 const { resourceNotFoundError, databaseError } = require('../misc/commonErrors');
-const commonErrors = require("../misc/commonErrors");
 
 class orderService {
    // 주문 서비스

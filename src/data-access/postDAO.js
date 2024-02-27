@@ -1,4 +1,3 @@
-const mongoose = require("mongoose");
 const { Post, Comment } = require("./model");
 const utils = require("../misc/utils");
 

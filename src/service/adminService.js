@@ -2,7 +2,6 @@ const { userDAO } = require("../data-access");
 const { orderDAO } = require("../data-access");
 const AppError = require("../misc/AppError");
 const { resourceNotFoundError, databaseError } = require('../misc/commonErrors');
-const commonErrors = require("../misc/commonErrors");
 
 class adminService {
    async getUsers() {

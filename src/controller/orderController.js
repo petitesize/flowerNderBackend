@@ -37,8 +37,8 @@ const orderController = {
    
    async patchOrder(req, res, next) {
       try {
-        const { id } = req.params;
-        const { shipping_info } = req.body;
+         const { id } = req.params;
+         const { shipping_info } = req.body;
          const updatedOrder = await orderService.updateOrder( id, shipping_info);
 
          res.status(200).json(utils.buildResponse(updatedOrder));
