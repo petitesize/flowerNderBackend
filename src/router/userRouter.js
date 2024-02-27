@@ -4,19 +4,16 @@ const { adminMiddleware } = require("../middleware");
 
 const userRouter = express.Router();
 
-// 토큰검증
+// 토큰검증 /api/v1/user/
 userRouter.use("/", adminMiddleware.checkAuthorization);
 
-// GET /api/v1/user/order
-userRouter.get(
-   "/order",
-   
-);
+// 회원주문조회 GET /api/v1/user/order
+userRouter.get("/order", userController.getUserOrder);
 
-// GET /api/v1/user/mypage
-userRouter.get("/mypage", );
+// 회원정보조회 GET /api/v1/user/mypage
+userRouter.get("/mypage", userController.getUserInfo);
 
-// PUT /api/v1/user/mypage
-userRouter.put("/mypage", );
+// 회원정보수정 PATCH /api/v1/user/mypage?id={id}
+userRouter.patch("/mypage", userController.patchUserInfo);
 
 module.exports = userRouter;
