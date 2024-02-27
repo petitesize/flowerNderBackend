@@ -20,9 +20,16 @@ orderRouter.get(
 
 // 배송지 수정 PATCH /v1/login
 orderRouter.patch(
-   "/:id", 
+   "/shipping/:id", 
    orderMiddleware.checkOrderIdFrom("params"), 
-   orderController.patchOrder
+   orderController.patchShippingInfo,
+);
+
+// 주문 취소 요청  PATCH /v1/login
+orderRouter.patch(
+   "/cancel/:id", 
+   orderMiddleware.checkOrderIdFrom("params"), 
+   orderController.patchCancelReq,
 );
 
 module.exports = orderRouter;
