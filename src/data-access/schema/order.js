@@ -40,6 +40,11 @@ const orderSchema = new mongoose.Schema(
       type: Date,
       default: new Date(),
     },
+    cancel_req: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
     //일단 무통장입금으로 통일이지만 Order document에는 정보 저장 필요해보여서 추가
     pay_method: {
       type: String,
