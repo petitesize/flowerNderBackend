@@ -6,19 +6,18 @@ const userController = {
    async getUserOrder(req, res, next) {
       try {
          const email = res.locals.user.email;
-         const { id } = req.query;
-         const product = await productService.getProduct(productId);
-         res.json(utils.buildResponse(product));
+         const userOrder = await userService.getUserOrder(email);
+         res.json(utils.buildResponse(userOrder));
       } catch (error) {
          next(error);
       }
    },
 
-   // 회원정보조회
+   // 회원정보조회(password 없음)
    async getUserInfo(req, res, next) {
       try {
-         const email = res.locals.user.email;
-         const userInfo = await userService.getUserInfo({ email });
+         const userEmail = res.locals.user.email;
+         const userInfo = await userService.getUserInfo(userEmail);
          res.json(utils.buildResponse(userInfo));
       } catch (error) {
          next(error);
@@ -26,14 +25,16 @@ const userController = {
    },
 
    // 회원정보수정
-   async putUserInfo(req, res, next) {
+   async patchUserInfo(req, res, next) {
       try {
-         const { productId } = req.params;
-         const { category, title, price, stock, description, size, origin, attribute, main_image, sub_image } = req.body;
-         const product = await productService.updateProduct(productId, {
-            category, title, price, stock, description, size, origin, attribute, main_image, sub_image,
+         const userEmail = res.locals.user.email;
+         // password 보내지 않기
+         // email, phone_number 수정 못함
+         const { email, password, user_name, phone_number, address, address_detail } = req.body;
+         const user = await userService.updateUserInfo(userEmail, {
+            email, password, user_name, phone_number, address, address_detail
          });
-         res.json(utils.buildResponse(product));
+         res.json(utils.buildResponse(user));
       } catch (error) {
          next(error);
       }
