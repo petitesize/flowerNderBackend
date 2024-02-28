@@ -24,9 +24,9 @@ class UserDAO {
   }
 
   // user용 회원정보 patch
-  async updateById (id, { password, user_name, address, address_detail }) {
-    const updatedUser = await User.findByIdAndUpdate(
-        id, 
+  async updateByEmail (email, { password, user_name, address, address_detail }) {
+    const updatedUser = await User.findOneAndUpdate(
+        { email }, 
         {
           password, user_name, address, address_detail
         }, 
@@ -40,8 +40,8 @@ class UserDAO {
   }
 
   // user용 회원정보 delete
-  async deleteById(id) {
-    const deletedUser = await User.findByIdAndDelete(id);
+  async deleteByEmail(email) {
+    const deletedUser = await User.findOneAndDelete({email});
     return deletedUser;
   }
 

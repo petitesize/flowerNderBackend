@@ -13,9 +13,9 @@ class UserService {
    }
 
    // 회원정보수정
-   async updateUserInfo(id, { plainPassword, user_name, address, address_detail }) {
+   async updateUserInfo(userEmail, { plainPassword, user_name, address, address_detail }) {
       const hashedPassword = await bcrypt.hash(plainPassword, 15);
-      const updatedUserInfo = await userDAO.updateById(id, { 
+      const updatedUserInfo = await userDAO.updateByEmail(userEmail, { 
          password: hashedPassword, 
          user_name, address, address_detail });
       if (updatedUserInfo === null) {
@@ -35,8 +35,8 @@ class UserService {
    }
 
    // 회원정보삭제
-   async deleteUserInfo(id) {
-      const deletedUser = await userDAO.deleteById(id);
+   async deleteUserInfo(userEmail) {
+      const deletedUser = await userDAO.deleteByEmail(userEmail);
       if (deletedUser === null) {
          throw new AppError(
          commonErrors.resourceNotFoundError,
