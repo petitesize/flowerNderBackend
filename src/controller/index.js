@@ -11,5 +11,5 @@ module.exports = {
   productController,
   orderController,
   adminController,
-  userController
+  userController,
 };

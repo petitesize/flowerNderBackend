@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
-const imageSchema = require('./image.js');
+const imageSchema = require("./image.js");
 
 const MAX_SUB_IMAGES = 5;
 
 // 서브 이미지 개수 제한
-const subImagesValidator = function(subImages) {
+const subImagesValidator = function (subImages) {
   return subImages.length <= MAX_SUB_IMAGES;
 };
 
@@ -29,33 +29,36 @@ const productSchema = new mongoose.Schema(
       required: true,
     },
     description: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     size: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     origin: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     attribute: {
-        type: String,
-        required: true,
-        default: " ",
+      type: String,
+      required: true,
+      default: " ",
     },
     main_image: imageSchema,
     sub_image: {
       type: [imageSchema],
-      validate: [subImagesValidator, `sub_image는 ${MAX_SUB_IMAGES}개 이하여야 합니다.`]
+      validate: [
+        subImagesValidator,
+        `sub_image는 ${MAX_SUB_IMAGES}개 이하여야 합니다.`,
+      ],
     },
   },
   {
     collection: "Product", // Product 컬랙션 생성
     versionKey: false,
-    timestamps: true, 
-  }
+    timestamps: true,
+  },
 );
 
 module.exports = productSchema;

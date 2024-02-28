@@ -94,7 +94,7 @@ class PostDAO {
       {
         runValidators: true, // 기본적으로 findOneAnd*의 형식의 메소드들은 schema 체크를 안한다. 이 옵션을 true로 해주면 schema 체크(업데이트 될 데이터에 대한 검증)를 진행한다.
         new: true, // 기본적으로 findOneAnd*의 형식의 메소드들은 업데이트 전의 document를 리턴한다. 업데이트 후의 document를 리턴받기 위해서는 이 옵션을 true로 해주면 된다.
-      }
+      },
     ).lean(); // 여기서도 lean을 사용하여 POJO를 리턴 받자.
     return plainUpdatedPost;
   }
@@ -104,7 +104,7 @@ class PostDAO {
     const [plainDeletedPost] = await Promise.all(
       // 위의 findByIdAndUpdate와 비슷하지만 update가 아니라 delete를 하며, 삭제된 document 객체를 반환한다.
       Post.findByIdAndDelete(id).lean(), // 여기서도 lean을 사용하여 POJO를 리턴 받자.
-      Comment.deleteMany({ postId: id })
+      Comment.deleteMany({ postId: id }),
     );
 
     // 사실 위의 두 가지 작업은 같이 성공해야하거나 실패해야함. 데이터의 일관성을 위한 것이며 부분적으로만 성공하면 나중에 삭제하기가 어려워진다.

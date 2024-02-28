@@ -8,9 +8,6 @@ const productRouter = express.Router();
 productRouter.get("/", productController.getProducts);
 
 // GET /api/v1/products/:productId
-productRouter.get(
-  "/:productId",
-  productController.getProduct 
-);
+productRouter.get("/:productId", productController.getProduct);
 
 module.exports = productRouter;

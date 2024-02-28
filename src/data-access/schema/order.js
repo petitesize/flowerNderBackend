@@ -1,29 +1,27 @@
 const mongoose = require("mongoose");
-const imageSchema = require('./image.js');
+const imageSchema = require("./image.js");
 
 // 주문 아이템 스키마
-const orderItemSchema = new mongoose.Schema(
-  {
-    //주문한 상품에 맞는 main_image와 title 불러와야함
-    product_id: {
-      type: mongoose.Types.ObjectId,
-      required: true,
-    },
-    main_image: imageSchema,
-    title: {
-        type: String,
-        required: true,
-    },
-    quantity: {
-        type: Number,
-        required: true,
-    },
-    total_amount: {
-        type: Number,
-        required: true,
-    },
-  }
-)
+const orderItemSchema = new mongoose.Schema({
+  //주문한 상품에 맞는 main_image와 title 불러와야함
+  product_id: {
+    type: mongoose.Types.ObjectId,
+    required: true,
+  },
+  main_image: imageSchema,
+  title: {
+    type: String,
+    required: true,
+  },
+  quantity: {
+    type: Number,
+    required: true,
+  },
+  total_amount: {
+    type: Number,
+    required: true,
+  },
+});
 
 // 주문 정보 스키마
 const orderSchema = new mongoose.Schema(
@@ -89,15 +87,15 @@ const orderSchema = new mongoose.Schema(
       delivery_memo: {
         type: String,
         required: true,
-        default: " ", 
+        default: " ",
       },
     },
   },
   {
     collection: "Order", // Order 컬랙션 생성
     versionKey: false,
-    timestamps: true, 
-  }
+    timestamps: true,
+  },
 );
 
 module.exports = orderSchema;

@@ -1,15 +1,32 @@
 const { User } = require("./model");
 
 class UserDAO {
-  async create({ email, password, user_name, phone_number, address, address_detail, postal_code, isAdmin }) {
-    
+  async create({
+    email,
+    password,
+    user_name,
+    phone_number,
+    address,
+    address_detail,
+    postal_code,
+    isAdmin,
+  }) {
     // const user = new User({ email, password, isAdmin });
-    const user = await User.create({ email, password, user_name, phone_number, address, address_detail, postal_code, isAdmin })
+    const user = await User.create({
+      email,
+      password,
+      user_name,
+      phone_number,
+      address,
+      address_detail,
+      postal_code,
+      isAdmin,
+    });
     await user.save();
 
     return user.toObject();
   }
-  
+
   async findById(id) {
     const user = await User.findById(id).lean();
     return user;
@@ -24,16 +41,19 @@ class UserDAO {
   }
 
   // user용 회원정보 patch
-  async updateByEmail (email, { password, user_name, address, address_detail }) {
+  async updateByEmail(email, { password, user_name, address, address_detail }) {
     const updatedUser = await User.findOneAndUpdate(
-        { email }, 
-        {
-          password, user_name, address, address_detail
-        }, 
-        {
-            runValidators: true,
-            new: true,
-        }
+      { email },
+      {
+        password,
+        user_name,
+        address,
+        address_detail,
+      },
+      {
+        runValidators: true,
+        new: true,
+      },
     ).lean();
 
     return updatedUser;
@@ -41,16 +61,15 @@ class UserDAO {
 
   // user용 회원정보 delete
   async deleteByEmail(email) {
-    const deletedUser = await User.findOneAndDelete({email});
+    const deletedUser = await User.findOneAndDelete({ email });
     return deletedUser;
   }
 
   //admin용 전체 회원내역 get
   async allUsers() {
     const users = await User.find({}).lean();
-    return users
+    return users;
   }
-
 }
 
 module.exports = new UserDAO();
