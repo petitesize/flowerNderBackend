@@ -74,6 +74,15 @@ class OrderDAO {
       const delete_order = await Order.findByIdAndDelete(id); //mongoose에는 deleteById 매서드는 없었다고 한다...
       return delete_order;
    }
+
+   //user용 주문 조회
+   async findByEmail(email) {
+      const userOrders = await Order.find({ "customer_info.email": email }).lean();
+      if (userOrders.length === 0) {
+        return null;
+      }
+      return userOrders;
+   }
 }
 
 module.exports = new OrderDAO();

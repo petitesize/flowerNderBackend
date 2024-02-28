@@ -8,7 +8,7 @@ class ProductService {
       const newProduct = await productDAO.create({
          category, title, price, stock, description, size, origin, attribute, main_image, sub_image
       });
-      return newProduct;
+      return {message: "상품이 성공적으로 추가되었습니다.", newProduct};
    }
 
    // 특정 id를 갖는 하나의 상품을 가져오는 메소드
@@ -33,7 +33,7 @@ class ProductService {
          404
          );
       }
-      return updatedProduct;
+      return {message: "상품정보가 성공적으로 수정되었습니다.", updatedProduct};
    }
 
    // 특정 id를 갖는 하나의 상품을 삭제하는 메소드
@@ -46,7 +46,7 @@ class ProductService {
          404
          );
       }
-      return deletedProduct;
+      return { message: "상품이 성공적으로 삭제되었습니다.", deletedProduct };
    }
 }
 
