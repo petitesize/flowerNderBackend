@@ -1,11 +1,13 @@
 const express = require("express");
 const { adminController } = require("../controller");
 const { adminMiddleware } = require("../middleware");
+const { uploadMiddleware } = require('../middlewares');
 
 const { productController } = require("../controller");
 const { productMiddleware } = require("../middleware");
 
-const upload = require('../middleware/upload');
+
+const upload = require('../middleware/uploadMiddleware');
 
 const adminRouter = express.Router();
 
@@ -60,6 +62,7 @@ adminRouter.put(
 // 관리자 상품삭제 : DELETE /api/v1/admin/products/product_id
 adminRouter.delete(
    "/products/:id", 
+   //uploadMiddleware("main_image", "sub_image") //이게 맞나
    productMiddleware.checkProductIdFrom("params"),
    productController.deleteProduct
 );
