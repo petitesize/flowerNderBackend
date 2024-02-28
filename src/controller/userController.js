@@ -27,9 +27,9 @@ const userController = {
    // 회원정보수정
    async patchUserInfo(req, res, next) {
       try {
-         const { id } = req.query;
+         const userEmail = res.locals.user.email;
          const { password, user_name, address, address_detail } = req.body;
-         const user = await userService.updateUserInfo(id, {
+         const user = await userService.updateUserInfo(userEmail, {
             plainPassword: password, 
             user_name, address, address_detail
          });
@@ -42,8 +42,8 @@ const userController = {
    // 회원정보삭제
    async deleteUserInfo(req, res, next) {
       try {
-         const { id } = req.query;
-         const user = await userService.deleteUserInfo(id);
+         const userEmail = res.locals.user.email;
+         const user = await userService.deleteUserInfo(userEmail);
          res.json(utils.buildResponse(user));
       } catch (error) {
          next(error);
