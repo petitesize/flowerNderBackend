@@ -7,7 +7,7 @@ const { userDAO } = require("../data-access");
 
 class authService {
   //회원가입 서비스
-  async signUp({ email, plainPassword, user_name, phone_number, address, address_detail, isAdmin }) {
+  async signUp({ email, plainPassword, user_name, phone_number, address, address_detail, postal_code, isAdmin }) {
     //이메일로 기존 유저 여부 
     const existingUser = await userDAO.findByEmail(email);
     if(existingUser !== null) {
@@ -22,19 +22,11 @@ class authService {
     const newUser = await userDAO.create({
       email,
       password: hashedPassword,
-      user_name, phone_number, address, address_detail,
+      user_name, phone_number, address, address_detail, postal_code,
       isAdmin,
     });
 
-    return {
-      id: newUser._id,
-      email: newUser.email,
-      user_name: newUser.user_name,
-      phone_number: newUser.phone_number,
-      address: newUser.address,
-      address_detail: newUser.address_detail,
-      isAdmin: newUser.isAdmin,
-    };
+    return {message: "회원가입이 성공적으로 완료되었습니다.", newUser};
   }
 
   //로그인 서비스

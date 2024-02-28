@@ -16,4 +16,7 @@ userRouter.get("/mypage", userController.getUserInfo);
 // 회원정보수정 PATCH /api/v1/user/mypage?id={id}
 userRouter.patch("/mypage", userController.patchUserInfo);
 
+// 회원정보삭제 DELETE /api/v1/user/mypage?id={id}
+userRouter.delete("/mypage", userController.deleteUserInfo);
+
 module.exports = userRouter;
