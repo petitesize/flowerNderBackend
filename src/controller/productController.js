@@ -52,35 +52,47 @@ const productController = {
       }
    },
 
+   
    // HTTP Post를 위한 controller(request handler)
    async postProduct(req, res, next) {
       try {
-         const { category, title, price, stock, description, size, origin, attribute, main_image, sub_image } = req.body;
-         const product = await productService.createProduct({ category, title, price, stock, description, size, origin, attribute, main_image, sub_image });
+         // 이미지 처리
+         if (!req.file) {
+            return res.status(400).json({ error: '이미지 파일이 없습니다.' });
+         }
+         const imageUrl = await imageService.imageUpload(req.file);
+
+         // 상품 정보 처리
+         const { category, title, price, stock, description, size, origin, attribute } = req.body;
+         // 이미지 URL을 상품 정보에 추가
+         const product = await productService.createProduct({
+            category,
+            title,
+            price,
+            stock,
+            description,
+            size,
+            origin,
+            attribute,
+            main_image: imageUrl, // S3에서 반환된 메인 이미지 URL
+            sub_image: [] // 서브 이미지 URL 배열(최대 5개)
+         });
+
          res.status(201).json(utils.buildResponse(product));
       } catch (error) {
-         next(error);
+         console.error('상품 등록 실패:', error);
+         next(error); // 에러 핸들링을 위해 next()에 에러를 넘깁니다
       }
    },
-
-   // 이미지 업로드 -> postProduct 함수랑 묶어야할 필요성 보임
-   async upload (req, res) {
-      try {
-        if (!req.file) {
-          return res.status(400).json({ error: '이미지 파일이 없습니다.' });
-        }
-    
-        const imageUrl = await imageService.uploadImageToS3(req.file);
-    
-        // 데이터베이스에 상품 정보와 imageUrl 저장하는 로직
-        // ...
-    
-        res.status(201).json({ imageUrl });
-      } catch (error) {
-        console.error('이미지 업로드 실패:', error);
-        res.status(500).json({ error: '이미지 업로드에 실패했습니다.' });
-      }
-   },
+   // async postProduct(req, res, next) {
+   //    try {
+   //       const { category, title, price, stock, description, size, origin, attribute, main_image, sub_image } = req.body;
+   //       const product = await productService.createProduct({ category, title, price, stock, description, size, origin, attribute, main_image, sub_image });
+   //       res.status(201).json(utils.buildResponse(product));
+   //    } catch (error) {
+   //       next(error);
+   //    }
+   // },
 };
 
 module.exports = productController;
