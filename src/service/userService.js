@@ -25,7 +25,7 @@ class UserService {
          404
          );
       }
-      return updatedUserInfo;
+      return {message: "회원정보수정이 성공적으로 완료되었습니다.", updatedUserInfo};
    }
 
    // 회원주문조회
@@ -44,7 +44,7 @@ class UserService {
          404
          );
       }
-      return { message: "회원정보가 정상적으로 삭제되었습니다." };
+      return { message: "회원정보가 성공적으로 삭제되었습니다.", deletedUser };
    }
 }
 

@@ -1,10 +1,10 @@
 const { User } = require("./model");
 
 class UserDAO {
-  async create({ email, password, user_name, phone_number, address, address_detail, isAdmin }) {
+  async create({ email, password, user_name, phone_number, address, address_detail, postal_code, isAdmin }) {
     
     // const user = new User({ email, password, isAdmin });
-    const user = await User.create({ email, password, user_name, phone_number, address, address_detail, isAdmin })
+    const user = await User.create({ email, password, user_name, phone_number, address, address_detail, postal_code, isAdmin })
     await user.save();
 
     return user.toObject();
