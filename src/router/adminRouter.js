@@ -5,6 +5,8 @@ const { adminMiddleware } = require("../middleware");
 const { productController } = require("../controller");
 const { productMiddleware } = require("../middleware");
 
+const upload = require('../middleware/upload');
+
 const adminRouter = express.Router();
 
 // 관리자 : /api/v1/admin
