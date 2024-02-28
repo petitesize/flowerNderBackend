@@ -23,11 +23,12 @@ class UserDAO {
     return users[0];
   }
 
-  async updateById (id, { email, password, user_name, phone_number, address, address_detail, isAdmin }) {
+  // user용 회원정보 patch
+  async updateById (id, { password, user_name, address, address_detail }) {
     const updatedUser = await User.findByIdAndUpdate(
         id, 
         {
-          email, password, user_name, phone_number, address, address_detail, isAdmin
+          password, user_name, address, address_detail
         }, 
         {
             runValidators: true,
@@ -38,8 +39,9 @@ class UserDAO {
     return updatedUser;
   }
 
+  // user용 회원정보 delete
   async deleteById(id) {
-    const deletedUser = await User.findByIdandDelete(id);
+    const deletedUser = await User.findByIdAndDelete(id);
     return deletedUser;
   }
 
