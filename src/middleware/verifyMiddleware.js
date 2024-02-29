@@ -15,7 +15,7 @@ function verifyToken(req, res, next) {
     );
    }
  
-   jwt.verify(token, config.jwtSecret, (err, decoded) => {
+   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
          next(
             new AppError(

@@ -1,6 +1,7 @@
 const express = require("express");
 const { 
-   adminController, productController 
+   adminController, 
+   productController 
 } = require("../controller");
 const {
   adminMiddleware,

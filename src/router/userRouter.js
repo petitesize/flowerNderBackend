@@ -10,13 +10,14 @@ userRouter.use("/", adminMiddleware.checkAuthorization);
 // 회원주문조회 GET /api/v1/user/order
 userRouter.get("/order", userController.getUserOrder);
 
-// 회원정보조회 GET /api/v1/user/mypage
-userRouter.get("/mypage", userController.getUserInfo);
+// '../mypage'였던 것들 헷갈릴까봐 me로 수정
+// 회원정보조회 GET /api/v1/user/me
+userRouter.get("/me", userController.getUserInfo);
 
-// 회원정보수정 PATCH /api/v1/user/mypage
-userRouter.patch("/mypage", userController.patchUserInfo);
+// 회원정보수정 PATCH /api/v1/user/me
+userRouter.patch("/me", userController.patchUserInfo);
 
-// 회원정보삭제 DELETE /api/v1/user/mypage
-userRouter.delete("/mypage", userController.deleteUserInfo);
+// 회원정보삭제 DELETE /api/v1/user/me
+userRouter.delete("/me", userController.deleteUserInfo);
 
 module.exports = userRouter;
