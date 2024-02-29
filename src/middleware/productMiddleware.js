@@ -43,8 +43,8 @@ const checkCompleteProductFrom = (from) => (req, res, next) => {
     size,
     origin,
     attribute,
-    main_image,
-    sub_image,
+    // main_image,
+    // sub_image,
   } = req[from];
 
   // category 필수
@@ -137,30 +137,6 @@ const checkCompleteProductFrom = (from) => (req, res, next) => {
       new AppError(
         commonErrors.requestValidationError,
         `${from}: attribute는 필수값입니다.`,
-        400,
-      ),
-    );
-    return;
-  }
-
-  // main_image 필수
-  if (main_image.url === undefined || main_image.url === "") {
-    next(
-      new AppError(
-        commonErrors.requestValidationError,
-        `${from}: main_image는 필수값입니다.`,
-        400,
-      ),
-    );
-    return;
-  }
-
-  // sub_image 필수
-  if (sub_image === undefined || sub_image.length === 0) {
-    next(
-      new AppError(
-        commonErrors.requestValidationError,
-        `${from}: sub_image는 필수값입니다.`,
         400,
       ),
     );

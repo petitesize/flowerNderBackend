@@ -16,6 +16,12 @@ class ProductService {
     main_image,
     sub_image,
   }) {
+    //title로 기존 상품 중복 체크 먼저
+    const existingTitle = await productDAO.findProduct(title);
+    if (existingTitle !== null) {
+      throw new AppError(commonErrors.inputError, "리소스 중복 에러", 400);
+    }
+
     const newProduct = await productDAO.create({
       category,
       title,

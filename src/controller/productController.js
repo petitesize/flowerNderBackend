@@ -75,11 +75,20 @@ const productController = {
   // HTTP Post를 위한 controller(request handler)
   async postProduct(req, res, next) {
     try {
-      // 이미지 처리
-      if (!req.file) {
-        return res.status(400).json({ error: "이미지 파일이 없습니다." });
+      // 메인 이미지 업로드 처리
+      const main_img_file = req.files['main_image'] ? req.files['main_image'][0] : null;
+      let main_img_url = "";
+      if (main_img_file) {
+        main_img_url = await imageService.imageUpload(main_img_file);
+      } else {
+        return res.status(400).json({ error: "메인 이미지 파일이 없습니다." });
       }
-      const imageUrl = await imageService.imageUpload(req.file);
+
+      // 서브 이미지 업로드 처리
+      const sub_img_files = req.files['sub_image'] || [];
+      const sub_img_urls = await Promise.all(
+        sub_img_files.map(file => imageService.imageUpload(file))
+      );
 
       // 상품 정보 처리
       const {
@@ -102,8 +111,8 @@ const productController = {
         size,
         origin,
         attribute,
-        main_image: imageUrl, // S3에서 반환된 메인 이미지 URL
-        sub_image: [], // 서브 이미지 URL 배열(최대 5개)
+        main_image: main_img_url, // S3에서 반환된 메인 이미지 URL
+        sub_image: sub_img_urls, // 서브 이미지 URL 배열(최대 5개)
       });
 
       res.status(201).json(utils.buildResponse(product));
