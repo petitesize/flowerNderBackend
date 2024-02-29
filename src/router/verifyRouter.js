@@ -1,7 +1,8 @@
 const express = require("express");
-const { verifyMiddleware } = require("../controller");
+const verifyRouter = express.Router();
+const { verifyMiddleware } = require("../middleware");
 
-app.get(
+verifyRouter.get(
    '/', 
    verifyMiddleware.verifyToken, 
    (req, res) => {
@@ -11,4 +12,6 @@ app.get(
          res.json({ redirectUrl: '/user' });
       }
    }
-);
+)
+
+module.exports = verifyRouter;
