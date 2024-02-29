@@ -91,6 +91,12 @@ class ProductDAO {
     const plainDeletedProduct = await Product.findByIdAndDelete(id).lean();
     return plainDeletedProduct;
   }
+
+  // 특정 title을 갖고 있는 상품 찾기
+  async findProduct(title) {
+    const product = await Product.findOne({title}).lean(); 
+    return product;
+  }
 }
 
 module.exports = new ProductDAO();
