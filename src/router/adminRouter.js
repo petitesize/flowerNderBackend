@@ -1,13 +1,12 @@
 const express = require("express");
-const { adminController } = require("../controller");
+const { 
+   adminController, productController 
+} = require("../controller");
 const {
   adminMiddleware,
   uploadMiddleware,
   productMiddleware,
 } = require("../middleware");
-const { productController } = require("../controller");
-
-// const upload = require('../middleware/uploadMiddleware');
 
 const adminRouter = express.Router();
 
@@ -36,7 +35,8 @@ adminRouter.get("/products", productController.getProducts);
 // 관리자 상품추가 : POST /api/v1/admin/products
 adminRouter.post(
   "/products",
-  productMiddleware.checkCompleteProductFrom("body"),
+//   productMiddleware.checkCompleteProductFrom("body"),
+  uploadMiddleware.upload, // postProduct 실행 전 file 타입 및 갯수 검증 -> 이미지 파일을 메모리에 저장 -> req.files에 파일 정보를 추가
   productController.postProduct,
 );
 
@@ -50,7 +50,6 @@ adminRouter.put(
 // 관리자 상품삭제 : DELETE /api/v1/admin/products/product_id
 adminRouter.delete(
   "/products/:id",
-  //uploadMiddleware("main_image", "sub_image") //이게 맞나
   productMiddleware.checkProductIdFrom("params"),
   productController.deleteProduct,
 );

@@ -4,25 +4,27 @@ const commonErrors = require("../misc/commonErrors");
 const multer = require("multer");
 const storage = multer.memoryStorage();
 
-const uploadMiddleware = multer({
+const upload = multer({
   storage: storage,
-  fileFilter: function (req, file, cb) {
+  fileFilter: function (req, file, callback) {
     const allowedMimes = ["image/jpeg", "image/png"]; //gif필요시 추후 추가
     if (allowedMimes.includes(file.mimetype)) {
-      // 업로드 진행하는 콜백함수 짜야하는데ㅣ........
-      next();
+      callback(null, true)
     } else {
-      next(
-        new AppError(
-          commonErrors.inputError,
-          "jpg, png 형식의 파일만 업로드 가능합니다.",
-          400,
-        ),
-      );
+      callback(new AppError(
+        commonErrors.inputError,
+        "jpg, png 형식의 파일만 업로드 가능합니다.",
+        400,
+      ))
     }
   },
-});
+}).fields([
+  { name: 'main_image', maxCount: 1 }, 
+  { name: 'sub_image', maxCount: 5 },
+]);
+
+// 파일 검증 및 업로드가 성공적으로 완료되면 multer는 내부적으로 next()를 호출
 
 module.exports = {
-  uploadMiddleware,
+  upload,
 };

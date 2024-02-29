@@ -28,12 +28,14 @@ const userController = {
   async patchUserInfo(req, res, next) {
     try {
       const userEmail = res.locals.user.email;
-      const { password, user_name, address, address_detail } = req.body;
+      const { password, new_password, user_name, address, address_detail, postal_code } = req.body;
       const user = await userService.updateUserInfo(userEmail, {
         plainPassword: password,
+        new_password,
         user_name,
         address,
         address_detail,
+        postal_code,
       });
       res.json(utils.buildResponse(user));
     } catch (error) {
