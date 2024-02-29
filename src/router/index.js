@@ -20,6 +20,7 @@ v1Router.use("/products", productRouter);
 v1Router.use("/order", orderRouter);
 v1Router.use("/admin", adminRouter);
 v1Router.use("/user", userRouter);
+v1Router.use("/mypage", verifyRouter);
 
 module.exports = {
   v1: v1Router, // API 버저닝을 위해 v1Router는 v1에 할당

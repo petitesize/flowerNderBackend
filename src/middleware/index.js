@@ -4,6 +4,7 @@ const productMiddleware = require("./productMiddleware");
 const orderMiddleware = require("./orderMiddleware");
 const adminMiddleware = require("./adminMiddleware");
 const uploadMiddleware = require("./uploadMiddleware");
+const verifyMiddleware = require("./verifyMiddleware")
 
 module.exports = {
   commentMiddleware,
@@ -12,4 +13,5 @@ module.exports = {
   orderMiddleware,
   adminMiddleware,
   uploadMiddleware,
+  verifyMiddleware,
 };
