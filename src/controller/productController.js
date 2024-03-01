@@ -87,7 +87,7 @@ const productController = {
 
       //II.서브이미지(required 아니기 때문에 400 조건 설정X)
       const sub_img_files = req.files['sub_image'] || []; //II-1.서브이미지는 arr 객체
-      const sub_img_urls = await Promise.all( //II-2. urls값들 all처리 
+      const sub_imgs = await Promise.all( //II-2. urls값들 all처리 
         sub_img_files.map(async (file) => { //II-3. map으로 값 저장
           const url = await imageService.imageUpload(file);
           return {
@@ -123,11 +123,9 @@ const productController = {
           url: main_img_url, 
           alt: "상품 대표 사진 설명란" 
         },
-        sub_images: sub_img_urls.map(sub_img_url => ({
-          url: sub_img_url,
-          alt: "상품 상세 사진 설명란" 
-        }))
+        sub_images: sub_imgs
       });
+      console.log("Product after saving:", product);
 
       //IV. 처리 성공된 데이터이자 new product 데이터 반환! 끝!
       res.status(201).json(utils.buildResponse(product));
