@@ -13,7 +13,6 @@ class ImageService {
       Bucket: process.env.AWS_S3_BUCKET_NAME,
       Key: imageKey,
       Body: file.buffer,
-      ACL: "public-read",
       ContentType: file.mimetype, // 업로드하는 파일의 MIME 타입(인터넷 상에서 파일의 포맷을 식별하기 위한 표준 방법)을 설정하는 부분!
     };
 

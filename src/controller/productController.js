@@ -43,6 +43,7 @@ const productController = {
         main_image,
         sub_image,
       } = req.body;
+
       const product = await productService.updateProduct(id, {
         category,
         title,
@@ -72,25 +73,32 @@ const productController = {
     }
   },
 
-  // HTTP Post를 위한 controller(request handler)
+  // HTTP POST를 위한 controller(request handler)
   async postProduct(req, res, next) {
     try {
-      // 메인 이미지 업로드 처리
+      //I. 메인이미지
       const main_img_file = req.files['main_image'] ? req.files['main_image'][0] : null;
-      let main_img_url = "";
+      let main_img_url = ""; //I-1. 스키마에 할당할 main url 변수 및 값 초기화하기
       if (main_img_file) {
         main_img_url = await imageService.imageUpload(main_img_file);
       } else {
-        return res.status(400).json({ error: "메인 이미지 파일이 없습니다." });
+        return res.status(400).json({ error: "메인 이미지 파일이 없습니다."});
       }
 
-      // 서브 이미지 업로드 처리
-      const sub_img_files = req.files['sub_image'] || [];
-      const sub_img_urls = await Promise.all(
-        sub_img_files.map(file => imageService.imageUpload(file))
+      //II.서브이미지(required 아니기 때문에 400 조건 설정X)
+      const sub_img_files = req.files['sub_image'] || []; //II-1.서브이미지는 arr 객체
+      const sub_img_urls = await Promise.all( //II-2. urls값들 all처리 
+        sub_img_files.map(async (file) => { //II-3. map으로 값 저장
+          const url = await imageService.imageUpload(file);
+          return {
+            url,
+            alt: "상세 이미지 설명란" 
+          };
+        }),
       );
 
-      // 상품 정보 처리
+      //III. 유효한 데이터들 정보 스키마에 맞게 처리
+      //III-1. 텍스트 형식으로 받아오는 필드들 설정
       const {
         category,
         title,
@@ -101,7 +109,7 @@ const productController = {
         origin,
         attribute,
       } = req.body;
-      // 이미지 URL을 상품 정보에 추가
+      //III-2. file 형식으로 받아오는 필드(이미지 관련)들 설정 후 product 데이터 생성(post)
       const product = await productService.createProduct({
         category,
         title,
@@ -111,25 +119,23 @@ const productController = {
         size,
         origin,
         attribute,
-        main_image: main_img_url, // S3에서 반환된 메인 이미지 URL
-        sub_image: sub_img_urls, // 서브 이미지 URL 배열(최대 5개)
+        main_image: {
+          url: main_img_url, 
+          alt: "상품 대표 사진 설명란" 
+        },
+        sub_images: sub_img_urls.map(sub_img_url => ({
+          url: sub_img_url,
+          alt: "상품 상세 사진 설명란" 
+        }))
       });
 
+      //IV. 처리 성공된 데이터이자 new product 데이터 반환! 끝!
       res.status(201).json(utils.buildResponse(product));
-    } catch (error) {
-      console.error("상품 등록 실패:", error);
-      next(error); // 에러 핸들링을 위해 next()에 에러를 넘깁니다
+    } catch (e) {
+      console.error("상품 등록 실패:", e);
+      next(e);
     }
   },
-  // async postProduct(req, res, next) {
-  //    try {
-  //       const { category, title, price, stock, description, size, origin, attribute, main_image, sub_image } = req.body;
-  //       const product = await productService.createProduct({ category, title, price, stock, description, size, origin, attribute, main_image, sub_image });
-  //       res.status(201).json(utils.buildResponse(product));
-  //    } catch (error) {
-  //       next(error);
-  //    }
-  // },
 };
 
 module.exports = productController;
