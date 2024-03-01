@@ -44,7 +44,8 @@ adminRouter.post(
 // 관리자 상품수정 : PUT /api/v1/admin/products/product_id
 adminRouter.put(
   "/products/:id",
-  productMiddleware.checkCompleteProductFrom("body"),
+  // productMiddleware.checkCompleteProductFrom("body"),
+  uploadMiddleware.upload,
   productController.putProduct,
 );
 
