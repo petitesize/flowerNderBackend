@@ -13,7 +13,7 @@ class ProductDAO {
     origin,
     attribute,
     main_image,
-    sub_images,
+    sub_image,
   }) {
     const product = new Product({
       category,
@@ -25,7 +25,7 @@ class ProductDAO {
       origin,
       attribute,
       main_image,
-      sub_images,
+      sub_image,
     });
     await product.save();
     return product.toObject();
