@@ -14,7 +14,7 @@ class ProductService {
     origin,
     attribute,
     main_image,
-    sub_images,
+    sub_image,
   }) {
     //title로 기존 상품 중복 체크 먼저
     const existingTitle = await productDAO.findProduct(title);
@@ -32,7 +32,7 @@ class ProductService {
       origin,
       attribute,
       main_image,
-      sub_images,
+      sub_image,
     });
     return { message: "상품이 성공적으로 추가되었습니다.", newProduct };
   }
