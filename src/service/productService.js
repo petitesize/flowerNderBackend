@@ -40,12 +40,26 @@ class ProductService {
   // 특정 id를 갖는 하나의 상품을 가져오는 메소드
   async getProduct(id) {
     const product = await productDAO.findById(id);
+    if (product === null) {
+      throw new AppError(
+        commonErrors.resourceNotFoundError,
+        "해당 상품이 존재하지 않습니다",
+        404,
+      );
+    }
     return product;
   }
 
   // 특정 조건(category)에 맞는 여러 개의 게시글을 가져오는 메소드
   async getProducts({ category }) {
     const products = await productDAO.findMany({ category });
+    if (products.length === 0) {
+      throw new AppError(
+        commonErrors.resourceNotFoundError,
+        "해당 카테고리가 존재하지 않습니다",
+        404,
+      );
+    }
     return products;
   }
 
