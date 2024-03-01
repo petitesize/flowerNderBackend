@@ -42,7 +42,7 @@ const productSchema = new mongoose.Schema(
       type: imageSchema,
       required: true
     },
-    sub_image: [{
+    sub_images: [{
       type: imageSchema,
       required: false
     }],
