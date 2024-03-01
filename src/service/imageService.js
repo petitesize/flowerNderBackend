@@ -19,7 +19,7 @@ class ImageService {
     try {
       await s3.upload(params).promise();
       console.log(`Image uploaded successfully: ${imageKey}`);
-      return `https://${process.env.AWS_S3_BUCKET_NAME}.s3.amazonaws.com/${imageKey}`;
+      return `http://${process.env.AWS_S3_BUCKET_NAME}.s3.amazonaws.com/${imageKey}`;
     } catch (e) {
       console.error(`이미지 업로드 실패: ${e.message}`);
       throw e;
