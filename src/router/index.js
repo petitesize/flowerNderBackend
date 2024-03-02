@@ -15,7 +15,6 @@ const verifyRouter = require("./verifyRouter");
 // API를 개발할 때는 책임감을 가지고 "개발"하고 "테스트"하고 "배포"하고 "관리"해야한다.
 const v1Router = express.Router();
 
-v1Router.use("/posts", postRouter);
 v1Router.use("/auth", authRouter);
 v1Router.use("/products", productRouter);
 v1Router.use("/order", orderRouter);
