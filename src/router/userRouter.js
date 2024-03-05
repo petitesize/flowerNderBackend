@@ -5,7 +5,7 @@ const { adminMiddleware } = require("../middleware");
 const userRouter = express.Router();
 
 // 토큰검증 /api/v1/user/
-userRouter.use("/", adminMiddleware.checkAuthorization);
+userRouter.use("/", adminMiddleware.checkAuthentication);
 
 // 회원주문조회 GET /api/v1/user/order
 userRouter.get("/order", userController.getUserOrder);
