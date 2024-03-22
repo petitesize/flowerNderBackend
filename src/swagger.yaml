@@ -14,7 +14,7 @@ tags:
     description: 상품
 paths:
   /products:
-      get:
+    get:
       tags:
          - product
       summary: 모든 상품 가져오기
@@ -35,7 +35,7 @@ paths:
                   error:
                      type: string
                      nullable: true
-      get:
+    get:
       tags:
          - product
       summary: 특정 카테고리 상품 가져오기
@@ -63,8 +63,8 @@ paths:
                      nullable: true
          "404":
             description: 해당 카테고리가 존재하지 않는 경우
-   /auth/signup:
-      post:
+  /auth/signup:
+    post:
       tags:
         - auth
       summary: 회원가입
