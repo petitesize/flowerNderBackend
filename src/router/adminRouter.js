@@ -14,7 +14,7 @@ const adminRouter = express.Router();
 // 관리자 : /api/v1/admin
 adminRouter.use(
   "/",
-  adminMiddleware.checkAuthorization,
+  adminMiddleware.checkAuthentication,
   adminMiddleware.checkAdminPermission,
 );
 
