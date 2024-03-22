@@ -1,5 +1,5 @@
 const express = require("express");
-const postRouter = require("./postRouter");
+// const postRouter = require("./postRouter");
 const authRouter = require("./authRouter");
 const productRouter = require("./productRouter");
 const orderRouter = require("./orderRouter");

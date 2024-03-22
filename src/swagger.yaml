@@ -1,18 +1,127 @@
 openapi: 3.0.3
 info:
-  title: Elice Board - OpenAPI 3.0
-  description: "게시판 서버입니다"
+  title: Flora & Dér
+  description: "Flora & Dér 서버입니다"
   version: 1.0.0
 externalDocs:
   description: Find out more about Swagger
   url: http://swagger.io
 servers:
-  - url: http://localhost:3000/api/v1
+  - url: http://localhost:8080/api/v1
     description: 개발 서버(api/v1)
 tags:
-  - name: post
-    description: 게시글
+  - name: product
+    description: 상품
 paths:
+  /products:
+      get:
+      tags:
+         - product
+      summary: 모든 상품 가져오기
+      description: 모든 상품 가져오기
+      operationId: getProducts
+      responses:
+         "200":
+            description: 성공
+            content:
+            application/json:
+               schema:
+                  type: object
+                  properties:
+                  data:
+                     type: array
+                     items:
+                        $ref: "#/components/schemas/product"
+                  error:
+                     type: string
+                     nullable: true
+      get:
+      tags:
+         - product
+      summary: 특정 카테고리 상품 가져오기
+      description: 특정 카테고리 상품 가져오기
+      operationId: getProducts
+      parameters:
+         - name: category
+            in: query
+            description: 상품 카테고리
+            required: true
+            schema:
+            type: string
+      responses:
+         "200":
+            description: 성공
+            content:
+            application/json:
+               schema:
+                  type: object
+                  properties:
+                  data:
+                     $ref: "#/components/schemas/product"
+                  error:
+                     type: string
+                     nullable: true
+         "404":
+            description: 해당 카테고리가 존재하지 않는 경우
+   /auth/signup:
+      post:
+      tags:
+        - auth
+      summary: 회원가입
+      description: 회원가입
+      operationId: postSignUp
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+        required: true
+      responses:
+        "201":
+          description: 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/User"
+                  error:
+                    type: string
+                    nullable: true
+        "400":
+          description: 중복된 email일 경우
+        "500":
+          description: email, password 형식이 잘못된 경우
+  /auth/login:
+    post:
+      tags:
+        - auth
+      summary: 로그인
+      description: 로그인
+      operationId: postSignIn
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+        required: true
+      responses:
+        "201":
+          description: 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/User"
+                  error:
+                    type: string
+                    nullable: true
+        "400":
+          description: email 또는 password가 올바르지 않은 경우
+
   /posts:
     get:
       tags:
