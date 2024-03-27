@@ -179,7 +179,7 @@ components:
           $ref: '#/components/schemas/Image'
         sub_image:
           type: array
-          item:
+          items:
             $ref: '#/components/schemas/Image'
     Image:
       type: object
