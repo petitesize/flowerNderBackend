@@ -12,6 +12,8 @@ servers:
 tags:
   - name: product
     description: 상품
+  - name: auth
+    description: 인증
 paths:
   /products:
     get:
@@ -128,9 +130,10 @@ paths:
                     nullable: true
                   data:
                     type: object
-                    token:
-                      type: string
-                      example: "Bearer <token>"
+                    properties:
+                      token:
+                        type: string
+                        example: "Bearer <token>"
         "400":
           description: email 또는 password가 올바르지 않은 경우
 components:
