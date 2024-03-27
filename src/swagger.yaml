@@ -12,14 +12,16 @@ servers:
 tags:
   - name: product
     description: 상품
+  - name: auth
+    description: 인증
 paths:
-  /posts:
+  /products:
     get:
       tags:
-        - post
-      summary: 모든 게시글 가져오기
-      description: 게시판에 있는 모든 게시글 가져오기
-      operationId: getPosts
+        - product
+      summary: 모든 상품 데이터 가져오기
+      description: 모든 상품 데이터 가져오기
+      operationId: getProducts
       responses:
         "200":
           description: 성공
@@ -28,51 +30,24 @@ paths:
               schema:
                 type: object
                 properties:
+                  error:
+                    type: string
+                    nullable: true
                   data:
                     type: array
                     items:
-                      $ref: "#/components/schemas/FullPost"
-                  error:
-                    type: string
-                    nullable: true
-    post:
-      tags:
-        - post
-      summary: 게시글 추가
-      description: 게시글을 게시판에 추가
-      operationId: addPost
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Post"
-        required: true
-      responses:
-        "200":
-          description: 성공
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    $ref: "#/components/schemas/Post"
-                  error:
-                    type: string
-                    nullable: true
-        "400":
-          description: title, content, author중 하나라도 없는 경우
-  /posts/{postId}:
+                      $ref: "#/components/schemas/Product"
+  /products?category={category}:
     get:
       tags:
-        - post
-      summary: 특정 게시글 가져오기
-      description: 게시글 ID로 게시글 하나 가져오기
-      operationId: getPost
+        - product
+      summary: 해당 카테고리 상품 데이터 가져오기
+      description: 해당 카테고리 상품 데이터 가져오기
+      operationId: getProducts
       parameters:
-        - name: postId
-          in: path
-          description: 게시글 ID
+        - name: category
+          in: query
+          description: 상품 카테고리
           required: true
           schema:
             type: string
@@ -84,269 +59,221 @@ paths:
               schema:
                 type: object
                 properties:
-                  data:
-                    $ref: "#/components/schemas/FullPost"
                   error:
                     type: string
                     nullable: true
-        "404":
-          description: 해당 게시글이 존재하지 않는 경우
-    put:
-      tags:
-        - post
-      summary: 게시글 수정
-      description: 게시글 ID로 게시글 내용 수정
-      operationId: updatePost
-      parameters:
-        - name: postId
-          in: path
-          description: 게시글 ID
-          required: true
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Post"
-        required: true
-      responses:
-        "200":
-          description: 성공
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    $ref: "#/components/schemas/Post"
-                  error:
-                    type: string
-                    nullable: true
-        "400":
-          description: title, content, author 모두 없는 경우
-        "404":
-          description: 해당 게시글이 존재하지 않는 경우
-    delete:
-      tags:
-        - post
-      summary: 게시글 삭제
-      description: 게시글 ID로 게시글 삭제
-      operationId: deletePost
-      parameters:
-        - name: postId
-          in: path
-          description: 게시글 ID
-          required: true
-          schema:
-            type: string
-      responses:
-        "200":
-          description: 성공
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    $ref: "#/components/schemas/Post"
-                  error:
-                    type: string
-                    nullable: true
-        "404":
-          description: 해당 게시글이 존재하지 않는 경우
-  /posts/{postId}/comments:
-    get:
-      tags:
-        - post
-      summary: 특정 게시글에 있는 모든 댓글 가져오기
-      description: 특정 게시글에 있는 모든 댓글 가져오기
-      operationId: getPostComments
-      parameters:
-        - name: postId
-          in: path
-          description: 게시글 ID
-          required: true
-          schema:
-            type: string
-      responses:
-        "200":
-          description: 성공
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
                   data:
                     type: array
                     items:
-                      $ref: "#/components/schemas/Comment"
-                  error:
-                    type: string
-                    nullable: true
+                      $ref: "#/components/schemas/Product"
+        "404":
+          description: 해당 카테고리가 존재하지 않는 경우
+  /auth/signup:
     post:
       tags:
-        - post
-      summary: 특정 게시글에 댓글 달기
-      description: 특정 게시글에 댓글 달기
-      operationId: addPostComment
-      parameters:
-        - name: postId
-          in: path
-          description: 게시글 ID
-          required: true
-          schema:
-            type: string
+        - auth
+      summary: 회원가입
+      description: 회원가입
+      operationId: postSignUp
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Comment"
+              type: object
+              required:
+                - email
+                - password
+                - user_name
+                - phone_number
+                - address
+                - address_detail
+                - postal_code
+              properties:
+                email:
+                  type: string
+                  description: 사용자의 이메일 주소는 데이터베이스에서 중복을 허용하지 않으며, 올바른 이메일 형식을 따라야 합니다.
+                  example: "test@email.com"
+                password:
+                  type: string
+                  minLength: 8
+                  description: 사용자 비밀번호는 최소 8글자 이상으로 설정해야 합니다.
+                  example: "test1234"
+                user_name:
+                  type: string
+                  example: "사용자 이름"
+                phone_number:
+                  type: string
+                  example: "010-0000-0000"
+                address:
+                  type: string
+                  example: "배송지 주소"
+                address_detail:
+                  type: string
+                  example: "배송지 상세 주소"
+                postal_code:
+                  type: string
+                  example: "배송지 우편번호"
         required: true
       responses:
-        "200":
+        "201":
           description: 성공
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  data:
-                    $ref: "#/components/schemas/Comment"
                   error:
                     type: string
                     nullable: true
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        example: "회원가입이 성공적으로 완료되었습니다."
+                      newUser:
+                        $ref: "#/components/schemas/User"
         "400":
-          description: postId, content, author중 하나라도 없는 경우
-  /posts/{postId}/comments/{commentId}:
-    put:
+          description: 중복된 email일 경우
+        "500":
+          description: email, password 형식이 잘못된 경우
+  /auth/login:
+    post:
       tags:
-        - post
-      summary: 특정 게시글에 달린 하나의 댓글 수정
-      description: 특정 게시글에 달린 하나의 댓글을 수정(ID로)
-      operationId: updatePostComment
-      parameters:
-        - name: postId
-          in: path
-          description: 게시글 ID
-          required: true
-          schema:
-            type: string
-        - name: commentId
-          in: path
-          description: 댓글 ID
-          required: true
-          schema:
-            type: string
+        - auth
+      summary: 로그인
+      description: 로그인
+      operationId: postSignIn
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Comment"
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  description: 사용자의 이메일 주소는 데이터베이스에서 중복을 허용하지 않으며, 올바른 이메일 형식을 따라야 합니다.
+                  example: "test@email.com"
+                password:
+                  type: string
+                  minLength: 8
+                  description: 사용자 비밀번호는 최소 8글자 이상으로 설정해야 합니다.
+                  example: "test1234"
         required: true
       responses:
-        "200":
+        "201":
           description: 성공
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  data:
-                    $ref: "#/components/schemas/Comment"
                   error:
                     type: string
                     nullable: true
+                  data:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                        example: "Bearer <token>"
         "400":
-          description: content가 없는 경우
-        "404":
-          description: 해당 게시글이나 댓글이 존재하지 않는 경우
-    delete:
-      tags:
-        - post
-      summary: 게시글 삭제
-      description: 게시글 ID로 게시글 삭제
-      operationId: deletePostComment
-      parameters:
-        - name: postId
-          in: path
-          description: 게시글 ID
-          required: true
-          schema:
-            type: string
-        - name: commentId
-          in: path
-          description: 댓글 ID
-          required: true
-          schema:
-            type: string
-      responses:
-        "200":
-          description: 성공
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    $ref: "#/components/schemas/Comment"
-                  error:
-                    type: string
-                    nullable: true
-        "404":
-          description: 해당 게시글이나 댓글이 존재하지 않는 경우
+          description: email 또는 password가 올바르지 않은 경우
 components:
   schemas:
-    Post:
+    Product:
       type: object
       required:
+        - category
         - title
-        - content
-        - author
+        - price
+        - stock
+        - description
+        - size
+        - origin
+        - attribute
+        - main_image
       properties:
+        category:
+          type: string
+          example: "상품 카테고리"
         title:
           type: string
-          example: 게시글 제목
-        content:
+          example: "상품 제목"
+        price:
+          type: number
+          example: 10000
+        stock:
+          type: number
+          example: 50
+        description:
           type: string
-          example: 게시글 내용입니다
-        author:
+          example: "상품 설명"
+        size:
           type: string
-          example: 게시글 작성자명입니다
-    Comment:
-      type: object
-      required:
-        - postId
-        - content
-        - author
-      properties:
-        postId:
+          example: "Small"
+        origin:
           type: string
-          example: 65084f52e037726473873f88
-        content:
+          example: "상품 원산지"
+        attribute:
           type: string
-          example: 댓글 내용입니다
-        author:
-          type: string
-          example: 댓글 작성자명입니다
-    FullPost:
-      type: object
-      required:
-        - title
-        - content
-        - author
-        - comments
-      properties:
-        title:
-          type: string
-          example: 게시글 제목
-        content:
-          type: string
-          example: 게시글 내용입니다
-        author:
-          type: string
-          example: 게시글 작성자명입니다
-        comments:
+          example: "상품 특징"
+        main_image:
+          $ref: '#/components/schemas/Image'
+        sub_image:
           type: array
           items:
-            $ref: "#/components/schemas/Comment"
+            $ref: '#/components/schemas/Image'
+    Image:
+      type: object
+      required:
+        - url
+      properties:
+        url:
+          type: string
+          example: https://s3.aws.com/elice/image.jpg
+        alt:
+          type: string
+          example: "상품 이미지"
+    User:
+      type: object
+      required:
+        - email
+        - password
+        - user_name
+        - phone_number
+        - address
+        - address_detail
+        - postal_code
+        - isAdmin
+      properties:
+        email:
+          type: string
+          description: 사용자의 이메일 주소는 데이터베이스에서 중복을 허용하지 않으며, 올바른 이메일 형식을 따라야 합니다.
+          example: "test@email.com"
+        password:
+          type: string
+          minLength: 8
+          description: 사용자 비밀번호는 최소 8글자 이상으로 설정해야 합니다. 데이터베이스에는 암호화되어 저장됩니다.
+          example: "$2b$15$Zk9Dkv1mO/hj.htY4oiMr1sGz2TU4up.3x"
+        user_name:
+          type: string
+          example: "사용자 이름"
+        phone_number:
+          type: string
+          example: "010-0000-0000"
+        address:
+          type: string
+          example: "배송지 주소"
+        address_detail:
+          type: string
+          example: "배송지 상세 주소"
+        postal_code:
+          type: string
+          example: "배송지 우편번호"
+        isAdmin:
+          type: boolean
+          example: false
