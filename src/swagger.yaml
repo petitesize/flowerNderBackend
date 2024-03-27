@@ -79,7 +79,40 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UserSignUpRequest"
+              type: object
+              required:
+                - email
+                - password
+                - user_name
+                - phone_number
+                - address
+                - address_detail
+                - postal_code
+              properties:
+                email:
+                  type: string
+                  description: 사용자의 이메일 주소는 데이터베이스에서 중복을 허용하지 않으며, 올바른 이메일 형식을 따라야 합니다.
+                  example: "test@email.com"
+                password:
+                  type: string
+                  minLength: 8
+                  description: 사용자 비밀번호는 최소 8글자 이상으로 설정해야 합니다.
+                  example: "test1234"
+                user_name:
+                  type: string
+                  example: "사용자 이름"
+                phone_number:
+                  type: string
+                  example: "010-0000-0000"
+                address:
+                  type: string
+                  example: "배송지 주소"
+                address_detail:
+                  type: string
+                  example: "배송지 상세 주소"
+                postal_code:
+                  type: string
+                  example: "배송지 우편번호"
         required: true
       responses:
         "201":
@@ -115,7 +148,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UserSignInRequest"
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  description: 사용자의 이메일 주소는 데이터베이스에서 중복을 허용하지 않으며, 올바른 이메일 형식을 따라야 합니다.
+                  example: "test@email.com"
+                password:
+                  type: string
+                  minLength: 8
+                  description: 사용자 비밀번호는 최소 8글자 이상으로 설정해야 합니다.
+                  example: "test1234"
         required: true
       responses:
         "201":
@@ -231,53 +277,3 @@ components:
         isAdmin:
           type: boolean
           example: false
-    UserSignUpRequest:
-      type: object
-      required:
-        - email
-        - password
-        - user_name
-        - phone_number
-        - address
-        - address_detail
-        - postal_code
-      properties:
-        email:
-          type: string
-          description: 사용자의 이메일 주소는 데이터베이스에서 중복을 허용하지 않으며, 올바른 이메일 형식을 따라야 합니다.
-          example: "test@email.com"
-        password:
-          type: string
-          minLength: 8
-          description: 사용자 비밀번호는 최소 8글자 이상으로 설정해야 합니다.
-          example: "test1234"
-        user_name:
-          type: string
-          example: "사용자 이름"
-        phone_number:
-          type: string
-          example: "010-0000-0000"
-        address:
-          type: string
-          example: "배송지 주소"
-        address_detail:
-          type: string
-          example: "배송지 상세 주소"
-        postal_code:
-          type: string
-          example: "배송지 우편번호"
-    UserSignInRequest:
-      type: object
-      required:
-        - email
-        - password
-      properties:
-        email:
-          type: string
-          description: 사용자의 이메일 주소는 데이터베이스에서 중복을 허용하지 않으며, 올바른 이메일 형식을 따라야 합니다.
-          example: "test@email.com"
-        password:
-          type: string
-          minLength: 8
-          description: 사용자 비밀번호는 최소 8글자 이상으로 설정해야 합니다.
-          example: "test1234"
