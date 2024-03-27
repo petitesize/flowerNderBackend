@@ -28,13 +28,13 @@ paths:
               schema:
                 type: object
                 properties:
+                  error:
+                    type: string
+                    nullable: true
                   data:
                     type: array
                     items:
                       $ref: "#/components/schemas/Product"
-                  error:
-                    type: string
-                    nullable: true
   /products?category={category}:
     get:
       tags:
@@ -57,13 +57,13 @@ paths:
               schema:
                 type: object
                 properties:
+                  error:
+                    type: string
+                    nullable: true
                   data:
                     type: array
                     items:
                       $ref: "#/components/schemas/Product"
-                  error:
-                    type: string
-                    nullable: true
         "404":
           description: 해당 카테고리가 존재하지 않는 경우
   /auth/signup:
@@ -92,7 +92,12 @@ paths:
                     nullable: true
                   data:
                     type: object
-                    $ref: "#/components/schemas/User"
+                    properties:
+                      message:
+                        type: string
+                        example: "회원가입이 성공적으로 완료되었습니다."
+                      newUser:
+                        $ref: "#/components/schemas/User"
         "400":
           description: 중복된 email일 경우
         "500":
@@ -118,14 +123,14 @@ paths:
               schema:
                 type: object
                 properties:
+                  error:
+                    type: string
+                    nullable: true
                   data:
                     type: object
                     token:
                       type: string
                       example: "Bearer <token>"
-                  error:
-                    type: string
-                    nullable: true
         "400":
           description: email 또는 password가 올바르지 않은 경우
 components:
@@ -170,7 +175,9 @@ components:
         main_image:
           $ref: '#/components/schemas/Image'
         sub_image:
-          $ref: '#/components/schemas/Image'
+          type: array
+          item:
+            $ref: '#/components/schemas/Image'
     Image:
       type: object
       required:
