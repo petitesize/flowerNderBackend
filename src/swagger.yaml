@@ -13,6 +13,100 @@ tags:
   - name: product
     description: 상품
 paths:
+  /products:
+    get:
+      tags:
+        - product
+      summary: 상품 데이터 가져오기
+      description: 상품 데이터 가져오기
+      operationId: getProducts
+      parameters:
+        - name: category
+          in: query
+          description: 상품 카테고리
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Product"
+                  error:
+                    type: string
+                    nullable: true
+        "404":
+          description: 해당 카테고리가 존재하지 않는 경우
+  /auth/signup:
+    post:
+      tags:
+        - auth
+      summary: 회원가입
+      description: 회원가입
+      operationId: postSignUp
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserSignUpRequest"
+        required: true
+      responses:
+        "201":
+          description: 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    nullable: true
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/User"
+        "400":
+          description: 중복된 email일 경우
+        "500":
+          description: email, password 형식이 잘못된 경우
+  /auth/login:
+    post:
+      tags:
+        - auth
+      summary: 로그인
+      description: 로그인
+      operationId: postSignIn
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserSignInRequest"
+        required: true
+      responses:
+        "201":
+          description: 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    token:
+                          type: string
+                          example: "Bearer <token>"
+                  error:
+                    type: string
+                    nullable: true
+        "400":
+          description: email 또는 password가 올바르지 않은 경우
+
   /posts:
     get:
       tags:
@@ -297,6 +391,148 @@ paths:
           description: 해당 게시글이나 댓글이 존재하지 않는 경우
 components:
   schemas:
+    Product:
+      type: object
+      required:
+        - category
+        - title
+        - price
+        - stock
+        - description
+        - size
+        - origin
+        - attribute
+        - main_image
+      properties:
+        category:
+          type: string
+          example: "상품 카테고리"
+        title:
+          type: string
+          example: "상품 제목"
+        price:
+          type: number
+          example: 10000
+        stock:
+          type: number
+          example: 50
+        description:
+          type: string
+          example: "상품 설명"
+        size:
+          type: string
+          example: "Small"
+        origin:
+          type: string
+          example: "상품 원산지"
+        attribute:
+          type: string
+          example: "상품 특징"
+        main_image:
+          $ref: '#/components/schemas/Image'
+        sub_image:
+          $ref: '#/components/schemas/Image'
+    Image:
+      type: object
+      required:
+        - url
+      properties:
+        url:
+          type: string
+          example: https://s3.aws.com/elice/image.jpg
+        alt:
+          type: string
+          example: "상품 이미지"
+    User:
+      type: object
+      required:
+        - email
+        - password
+        - user_name
+        - phone_number
+        - address
+        - address_detail
+        - postal_code
+        - isAdmin
+      properties:
+        email:
+          type: string
+          description: 사용자의 이메일 주소는 데이터베이스에서 중복을 허용하지 않으며, 올바른 이메일 형식을 따라야 합니다.
+          example: "test@email.com"
+        password:
+          type: string
+          minLength: 8
+          description: 사용자 비밀번호는 최소 8글자 이상으로 설정해야 합니다. 데이터베이스에는 암호화되어 저장됩니다.
+          example: "$2b$15$Zk9Dkv1mO/hj.htY4oiMr1sGz2TU4up.3x"
+        user_name:
+          type: string
+          example: "사용자 이름"
+        phone_number:
+          type: string
+          example: "010-0000-0000"
+        address:
+          type: string
+          example: "배송지 주소"
+        address_detail:
+          type: string
+          example: "배송지 상세 주소"
+        postal_code:
+          type: string
+          example: "배송지 우편번호"
+        isAdmin:
+          type: boolean
+          example: false
+    UserSignUpRequest:
+      type: object
+      required:
+        - email
+        - password
+        - user_name
+        - phone_number
+        - address
+        - address_detail
+        - postal_code
+      properties:
+        email:
+          type: string
+          description: 사용자의 이메일 주소는 데이터베이스에서 중복을 허용하지 않으며, 올바른 이메일 형식을 따라야 합니다.
+          example: "test@email.com"
+        password:
+          type: string
+          minLength: 8
+          description: 사용자 비밀번호는 최소 8글자 이상으로 설정해야 합니다.
+          example: "$2b$15$Zk9Dkv1mO/hj.htY4oiMr1sGz2TU4up.3x"
+        user_name:
+          type: string
+          example: "사용자 이름"
+        phone_number:
+          type: string
+          example: "010-0000-0000"
+        address:
+          type: string
+          example: "배송지 주소"
+        address_detail:
+          type: string
+          example: "배송지 상세 주소"
+        postal_code:
+          type: string
+          example: "배송지 우편번호"
+    UserSignInRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          description: 사용자의 이메일 주소는 데이터베이스에서 중복을 허용하지 않으며, 올바른 이메일 형식을 따라야 합니다.
+          example: "test@email.com"
+        password:
+          type: string
+          minLength: 8
+          description: 사용자 비밀번호는 최소 8글자 이상으로 설정해야 합니다.
+          example: "$2b$15$Zk9Dkv1mO/hj.htY4oiMr1sGz2TU4up.3x"
+    
     Post:
       type: object
       required:
