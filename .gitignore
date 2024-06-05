@@ -238,3 +238,6 @@ $RECYCLE.BIN/
 
 # eslint
 .eslintrc.js
+
+.pem
+flowernderkey.pem
