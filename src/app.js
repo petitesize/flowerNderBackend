@@ -30,8 +30,22 @@ async function create() {
   });
 
   // 모든 출처에서의 요청을 허용(CORS(Cross-Origin Resource Sharing) 정책)
+  // if (process.env.NODE_ENV !== "production") {
+  //   expressApp.use(cors());
+  // }
   if (process.env.NODE_ENV !== "production") {
     expressApp.use(cors());
+  } else {
+    const corsOptions = {
+      origin: [
+        "ec2-3-107-20-201.ap-southeast-2.compute.amazonaws.com",
+        "http://3.107.20.201/",
+      ], // 프론트엔드 도메인
+      methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+      credentials: true, // 쿠키를 포함한 인증정보 허용
+      optionsSuccessStatus: 204,
+    };
+    expressApp.use(cors(corsOptions));
   }
 
   // version 1의 api router를 등록
@@ -44,7 +58,7 @@ async function create() {
   expressApp.use(
     "/api-docs",
     swaggerUi.serve,
-    swaggerUi.setup(swaggerDocument),
+    swaggerUi.setup(swaggerDocument)
   );
 
   // 해당되는 URL이 없을 때를 대비한 미들웨어
@@ -53,8 +67,8 @@ async function create() {
       new AppError(
         commonErrors.resourceNotFoundError,
         "Resource not found",
-        404,
-      ),
+        404
+      )
     );
   });
 
@@ -78,10 +92,10 @@ async function create() {
       server.listen(config.port);
       server.on("listening", () => {
         console.log(
-          `🚀${config.applicationName}가 포트 ${config.port}에서 운영중입니다.`,
+          `🚀${config.applicationName}가 포트 ${config.port}에서 운영중입니다.`
         );
         console.log(
-          `📜${config.applicationName}의 REST API 문서는 /api-docs에서 확인 가능합니다.`,
+          `📜${config.applicationName}의 REST API 문서는 /api-docs에서 확인 가능합니다.`
         );
       });
     },
