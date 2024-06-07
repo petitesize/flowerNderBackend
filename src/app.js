@@ -38,8 +38,8 @@ async function create() {
   } else {
     const corsOptions = {
       origin: [
-        "ec2-3-107-20-201.ap-southeast-2.compute.amazonaws.com",
-        "http://3.107.20.201/",
+        "ec2-13-239-15-179.ap-southeast-2.compute.amazonaws.com",
+        "http://13.239.15.179/",
       ], // 프론트엔드 도메인
       methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
       credentials: true, // 쿠키를 포함한 인증정보 허용
